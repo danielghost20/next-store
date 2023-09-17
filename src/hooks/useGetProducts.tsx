@@ -1,5 +1,5 @@
 'use client'
-import { getProducts } from "@/services/products.services";
+import { getProducts } from "@/services/productsHome.services";
 import { useEffect, useState } from "react";
 
 export function useGetProducts() {
