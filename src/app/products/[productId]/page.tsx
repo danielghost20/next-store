@@ -1,9 +1,10 @@
+
+
 import Link from "next/link"
 import { FiShoppingBag, FiSearch, FiGithub } from 'react-icons/fi'
 import { LiaShoppingCartSolid } from 'react-icons/lia'
 import { ModeToggle } from "@/components/ui/ModeToggle"
 import { Input } from "@/components/ui/Input"
-import Image from "next/image"
 import { getProductById, getProductsByCategory } from "@/services/productsPage.services"
 import ViewImagesProduct from "@/components/ViewImagesProduct"
 import ProductOfert from "@/components/ProductOfert"

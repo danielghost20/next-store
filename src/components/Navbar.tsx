@@ -1,31 +1,46 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { FiGithub, FiShoppingBag, FiSearch } from 'react-icons/fi'
-import { LiaShoppingCartSolid } from 'react-icons/lia'
-import { ModeToggle } from './ui/ModeToggle'
-// import { Input } from './ui/Input'
+import Link from "next/link";
+import { FiGithub, FiShoppingBag } from "react-icons/fi";
+import { LiaShoppingCartSolid } from "react-icons/lia";
+import { ModeToggle } from "./ui/ModeToggle";
+import { userGetProfile } from "@/services/user.services";
+import { useEffect, useState } from "react";
+import { UserData } from "@/interfaces/user.interface";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { buttonVariants } from "./ui/button";
 
 export default function Navbar() {
+    const [user, setUser] = useState<undefined | UserData>(undefined);
+    useEffect(() => {
+        userGetProfile().then((res) => setUser(res));
+    }, []);
     return (
         <nav className="flex items-center justify-between w-full h-20 px-3 bordder-b-2">
-            <Link className='p-2 border-2 rounded-md' href='/'>
-                <FiShoppingBag className="text-xl" />
-            </Link>
-            {/* <div className='flex items-center gap-3 border-2 rounded-md px-2 pý-5'>
-                <Input type='search' placeholder='Buscar' className='border-none outline-none w-96' />
-                <FiSearch className="text-xl" />
-            </div> */}
-            <h2 className='text-3xl font-semibold'>SHOP DANIDV</h2>
-            <div className='flex gap-2'>
-                <a className='flex items-center p-2 border-2 rounded-md'>
+            <div>
+                <Link className="p-2 border-2 rounded-md" href="/">
+                    <FiShoppingBag className="text-xl" />
+                </Link>
+                {user !== undefined && user !== null ? (
+                    <Avatar>
+                        <AvatarImage src={user.photoURL ? user.photoURL : 'https://github.com/shadcn.png'} />
+                        <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                ) : (
+                    <Link href='/auth/register' className={`${buttonVariants()} max-w-max`}>Registro</Link>
+                )}
+            </div>
+
+            <h2 className="text-3xl font-semibold">SHOP DANIDV</h2>
+            <div className="flex gap-2">
+                <a className="flex items-center p-2 border-2 rounded-md">
                     <FiGithub className="text-xl" />
                 </a>
-                <span className='flex items-center p-1 border-2 rounded-md'>
+                <span className="flex items-center p-1 border-2 rounded-md">
                     <LiaShoppingCartSolid className="text-3xl" />
                 </span>
                 <ModeToggle />
             </div>
         </nav>
-    )
+    );
 }

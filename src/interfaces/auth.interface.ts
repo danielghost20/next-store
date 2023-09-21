@@ -3,7 +3,10 @@ export interface Credentials {
     password: string
 }
 
-export interface AccessToken {
-    access_token: string,
-    refresh_token: string
+
+export interface userSingUpData {
+    name: string,
+    last_name: string,
+    photoURL: string,
+    phoneNumber: number
 }
