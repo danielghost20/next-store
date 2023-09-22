@@ -9,14 +9,15 @@ import { BsArrowLeft } from "react-icons/bs";
 import { userSingIn } from "@/services/auth.services";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Credentials } from "@/interfaces/auth.interface";
+import { useRouter } from 'next/navigation';
 
 
 export default function LoginPage() {
     const { register, handleSubmit, formState: { errors } } = useForm<Credentials>()
-
+    const router = useRouter()
     const onSubmit: SubmitHandler<Credentials> = (data: Credentials) => {
         userSingIn({ email: data.email, password: data.password })
-            .then((res: any) => { Cookie.set('token', res.accessToken) })
+            .then((res: any) => { Cookie.set('token', res.accessToken), router.push('/') })
             .catch(err => console.log('hubo un error'))
     }
 

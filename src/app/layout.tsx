@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import ThemeProviderChad from "@/components/ThemeProviderChad";
 import { Providers } from "@/redux/Providers";
+import Cart from "@/components/Cart";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +22,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <ThemeProviderChad>
+            <Cart />
             {children}
           </ThemeProviderChad>
         </Providers>

@@ -12,10 +12,11 @@ type ProductProps = {
     price: number,
     productName: string,
     description: string,
-    id: number
+    id: number,
+    category: string
 }
 
-export default function ProductOfert({ cardStyles, image, price, productName, description, id }: ProductProps) {
+export default function ProductOfert({ cardStyles, image, price, productName, description, id, category }: ProductProps) {
     return (
         <div className={`${cardStyles} overflow-hidden flex flex-col gap-2 relative`}>
             <div className="relative w-full overflow-hidden h-72">
@@ -25,6 +26,7 @@ export default function ProductOfert({ cardStyles, image, price, productName, de
             <div className="flex flex-col gap-2 p-2">
                 <h2>{productName}</h2>
                 <h3 className="text-xs">{description}</h3>
+                <p>Categoria: {category}</p>
             </div>
             <Link href={`/products/${id}`} className={`${buttonVariants()} max-w-max`}>
                 Detalles

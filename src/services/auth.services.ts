@@ -13,7 +13,7 @@ import { addDoc, collection } from "firebase/firestore";
 
 export async function userSingUp(
   { email, password }: Credentials,
-  { name, last_name, photoURL }: userSingUpData
+  { name, last_name, photoURL, phoneNumber }: userSingUpData
 ) {
   try {
     const credentials = await createUserWithEmailAndPassword(
@@ -33,6 +33,7 @@ export async function userSingUp(
         photo_url: photoURL,
         email: email,
         password: password,
+        phoneNumber: phoneNumber
       });
       return credentials.user;
     }

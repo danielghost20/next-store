@@ -17,26 +17,35 @@ export default function Navbar() {
     }, []);
     return (
         <nav className="flex items-center justify-between w-full h-20 px-3 bordder-b-2">
-            <div>
+            <div className="flex gap-2">
                 <Link className="p-2 border-2 rounded-md" href="/">
                     <FiShoppingBag className="text-xl" />
                 </Link>
                 {user !== undefined && user !== null ? (
                     <Avatar>
-                        <AvatarImage src={user.photoURL ? user.photoURL : 'https://github.com/shadcn.png'} />
+                        <AvatarImage
+                            src={
+                                user.photoURL ? user.photoURL : "https://github.com/shadcn.png"
+                            }
+                        />
                         <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
                 ) : (
-                    <Link href='/auth/register' className={`${buttonVariants()} max-w-max`}>Registro</Link>
+                    <Link
+                        href="/auth/register"
+                        className={`${buttonVariants()} max-w-max`}
+                    >
+                        Registrate
+                    </Link>
                 )}
             </div>
 
             <h2 className="text-3xl font-semibold">SHOP DANIDV</h2>
             <div className="flex gap-2">
-                <a className="flex items-center p-2 border-2 rounded-md">
+                <a className="flex items-center p-2 border-2 rounded-md cursor-pointer">
                     <FiGithub className="text-xl" />
                 </a>
-                <span className="flex items-center p-1 border-2 rounded-md">
+                <span className="flex items-center p-1 border-2 rounded-md cursor-pointer">
                     <LiaShoppingCartSolid className="text-3xl" />
                 </span>
                 <ModeToggle />

@@ -5,9 +5,8 @@ import { buttonVariants } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { userSingUp } from "@/services/auth.services";
-import { useDispatch } from "react-redux";
-import { getUserCredentials } from "@/redux/slices/userSlice";
-
+import Cookie from "js-cookie";
+import { useRouter } from "next/navigation";
 type FormProps = {
     name: string;
     last_name: string;
@@ -17,12 +16,12 @@ type FormProps = {
 };
 
 export default function RegisterPage() {
-    const dispatch = useDispatch();
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm<FormProps>();
+    const router = useRouter();
 
     const onSubmit: SubmitHandler<FormProps> = (data: FormProps) => {
         userSingUp(
@@ -34,7 +33,8 @@ export default function RegisterPage() {
                 phoneNumber: data.phoneNumber,
             }
         ).then((res: any) => {
-            dispatch(getUserCredentials(res.accessToken)), console.log(res);
+            Cookie.set("token", res.accessToken);
+            router.push("/");
         });
     };
     return (
@@ -109,7 +109,9 @@ export default function RegisterPage() {
                             type="number"
                         />
                         {errors.phoneNumber?.message ? (
-                            <p className="text-base text-red-600">{errors.phoneNumber.message}</p>
+                            <p className="text-base text-red-600">
+                                {errors.phoneNumber.message}
+                            </p>
                         ) : (
                             <p className="py-3"></p>
                         )}
@@ -119,7 +121,7 @@ export default function RegisterPage() {
                         <Input
                             {...register("email", {
                                 required: true,
-                                maxLength: { value: 20, message: "Maximo 20 caracteres" },
+                                maxLength: { value: 50, message: "Maximo 50 caracteres" },
                                 minLength: { value: 5, message: "Minimo 5 caracteres" },
                             })}
                             type="email"

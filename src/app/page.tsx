@@ -4,9 +4,7 @@ import { Products } from "@/interfaces/product.interface";
 import { getProducts } from "@/services/productsHome.services";
 import Image from "next/image";
 import Link from 'next/link';
-import { FiGithub, FiShoppingBag } from 'react-icons/fi'
-import { LiaShoppingCartSolid } from 'react-icons/lia'
-import { ModeToggle } from '../components/ui/ModeToggle'
+import Navbar from "@/components/Navbar";
 
 export default async function Home() {
   const products = await getProducts();
@@ -14,21 +12,7 @@ export default async function Home() {
   return (
     <>
       <header>
-        <nav className="flex items-center justify-between w-full h-20 px-3 bordder-b-2">
-          <Link className='p-2 border-2 rounded-md' href='/'>
-            <FiShoppingBag className="text-xl" />
-          </Link>
-          <h2 className='text-3xl font-semibold'>SHOP DANIDV</h2>
-          <div className='flex gap-2'>
-            <a className='flex items-center p-2 border-2 rounded-md'>
-              <FiGithub className="text-xl" />
-            </a>
-            <span className='flex items-center p-1 border-2 rounded-md'>
-              <LiaShoppingCartSolid className="text-3xl" />
-            </span>
-            <ModeToggle />
-          </div>
-        </nav>
+        <Navbar />
         <div className="flex items-center justify-center w-full gap-4 py-3 my-10 border-y-2">
           <Link className="text-lg" href='/products'>Productos</Link>
           <Link className="text-lg" href='/'>Ofertas</Link>
@@ -81,6 +65,7 @@ export default async function Home() {
               cardStyles="w-[340px] h-[400px] border-2  rounded-md"
               productName={product.title}
               description={product.description}
+              category={product.category.name}
             />
           ))}
         </section>
