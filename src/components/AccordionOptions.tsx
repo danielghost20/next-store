@@ -4,12 +4,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Categories } from "@/interfaces/product.interface";
 
 type AccordionProps = {
   title: string,
-  options: Categories[] | null,
-  setValue: (arg: number) => void
+  options: string[] | null,
+  setValue: (arg: string) => void
 }
 
 export default function AccordionOptions({ title, options, setValue }: AccordionProps) {
@@ -20,8 +19,8 @@ export default function AccordionOptions({ title, options, setValue }: Accordion
           <AccordionTrigger>{title}</AccordionTrigger>
           {
             options?.map(option => (
-              <AccordionContent className="cursor-pointer" onClick={() => setValue(option.id)} key={option.id}>
-                {option.name}
+              <AccordionContent className="cursor-pointer" onClick={() => setValue(option)} key={option}>
+                {option}
               </AccordionContent>
             ))
           }

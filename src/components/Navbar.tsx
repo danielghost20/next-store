@@ -9,12 +9,21 @@ import { useEffect, useState } from "react";
 import { UserData } from "@/interfaces/user.interface";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { buttonVariants } from "./ui/button";
+import { useDispatch } from "react-redux";
+import { openCart } from "@/redux/slices/cartSlice";
+
+
 
 export default function Navbar() {
     const [user, setUser] = useState<undefined | UserData>(undefined);
+
+    const dispatch = useDispatch()
+
     useEffect(() => {
         userGetProfile().then((res) => setUser(res));
     }, []);
+
+
     return (
         <nav className="flex items-center justify-between w-full h-20 px-3 bordder-b-2">
             <div className="flex gap-2">
@@ -45,7 +54,7 @@ export default function Navbar() {
                 <a className="flex items-center p-2 border-2 rounded-md cursor-pointer">
                     <FiGithub className="text-xl" />
                 </a>
-                <span className="flex items-center p-1 border-2 rounded-md cursor-pointer">
+                <span onClick={() => dispatch(openCart(true))} className="flex items-center p-1 border-2 rounded-md cursor-pointer">
                     <LiaShoppingCartSolid className="text-3xl" />
                 </span>
                 <ModeToggle />

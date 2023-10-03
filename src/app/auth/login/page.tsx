@@ -12,6 +12,7 @@ import { Credentials } from "@/interfaces/auth.interface";
 import { useRouter } from 'next/navigation';
 
 
+
 export default function LoginPage() {
     const { register, handleSubmit, formState: { errors } } = useForm<Credentials>()
     const router = useRouter()

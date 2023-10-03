@@ -23,7 +23,7 @@ export default async function Home() {
           <div className="relative flex items-center justify-center w-full h-full row-start-1 row-end-3 border-2 rounded-md ">
             <Image
               className=" w-[50%]"
-              src="/../../images/sudadera.webp"
+              src="/images/sudadera.webp"
               width={400}
               height={400}
               alt="product_image"
@@ -33,7 +33,7 @@ export default async function Home() {
           <div className="relative flex items-center justify-center w-full h-full col-start-2 col-end-3 row-start-1 row-end-2 border-2 rounded-md">
             <Image
               className=" w-[50%]"
-              src="/../../images/vaso.webp"
+              src="/images/vaso.webp"
               width={400}
               height={400}
               alt="product_image"
@@ -43,7 +43,7 @@ export default async function Home() {
           <div className="relative flex items-center justify-center w-full h-full col-start-2 col-end-3 row-start-2 row-end-3 border-2 rounded-md">
             <Image
               className=" w-[50%]"
-              src="/../../images/gorro.webp"
+              src="/images/gorro.webp"
               width={300}
               height={400}
               alt="product_image"
@@ -61,11 +61,11 @@ export default async function Home() {
               id={product.id}
               key={product.id}
               price={product.price}
-              image={product.images[0]}
+              image={product.image}
               cardStyles="w-[340px] h-[400px] border-2  rounded-md"
               productName={product.title}
               description={product.description}
-              category={product.category.name}
+              category={product.category}
             />
           ))}
         </section>

@@ -33,7 +33,8 @@ export async function userSingUp(
         photo_url: photoURL,
         email: email,
         password: password,
-        phoneNumber: phoneNumber
+        phoneNumber: phoneNumber,
+        cart: []
       });
       return credentials.user;
     }

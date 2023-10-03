@@ -5,33 +5,45 @@ import { FiGithub, FiShoppingBag, FiSearch } from "react-icons/fi";
 import { LiaShoppingCartSolid } from "react-icons/lia";
 import { ModeToggle } from "../../components/ui/ModeToggle";
 import { Input } from "../../components/ui/Input";
-import {
-    getCategories,
-    getProductsByCategoryOrAll,
-} from "@/services/productsPage.services";
+import { getCategories } from "@/services/productsPage.services";
 import ProductOfert from "@/components/ProductOfert";
 import AccordionOptions from "@/components/AccordionOptions";
 import SliderPrice from "@/components/SliderPrice";
 import { buttonVariants } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-import { Categories, Products } from "@/interfaces/product.interface";
+import { Products } from "@/interfaces/product.interface";
+import { getProducts } from "@/services/productsPage.services";
 
 export default function Products() {
-    const [category, setCategory] = useState<number | null>(null);
-    const [categories, setCategories] = useState<Categories[] | null>(null);
-    const [products, setProducts] = useState<null | Products[]>(null);
-
-    useEffect(() => {
-        getProductsByCategoryOrAll(category)
-            .then((res) => setProducts(res))
-            .catch((err) => console.log("error no se encontraron productos"));
-    }, [category]);
+    const [category, setCategory] = useState<string | null>(null);
+    const [categories, setCategories] = useState<string[] | null>(null);
+    const [productsByCategory, setProductsByCategory] = useState<
+        Products[] | null
+    >(null);
 
     useEffect(() => {
         getCategories()
             .then((res) => setCategories(res))
             .catch((err) => console.log("ocurrio un error"));
     }, []);
+
+    useEffect(() => {
+        getProducts()
+            .then((res: Products[]) => {
+                if (category) {
+                    setProductsByCategory(
+                        res.filter((prod) => prod.category === category)
+                    );
+                } else {
+                    setProductsByCategory(res);
+                }
+            })
+            .catch((err) => console.log("Ocurrio un error"));
+    }, [category]);
+
+    const handleResetFilters = () => {
+        setCategory(null)
+    }
 
     return (
         <>
@@ -69,23 +81,30 @@ export default function Products() {
                         setValue={setCategory}
                     />
                     <SliderPrice defaultValue={[100]} />
-                    <button className={`${buttonVariants()} max-w-max ml-auto`}>
-                        Aplicar
+                    <button onClick={handleResetFilters} className={`${category ? buttonVariants() : 'hidden'}  max-w-max ml-auto`}>
+                        Restablecer Filtros
                     </button>
                 </div>
                 <div className="flex flex-wrap w-full gap-5 mt-2 overflow-y-scroll">
-                    {products?.map((product) => (
-                        <ProductOfert
-                            id={product.id}
-                            description={product.description}
-                            cardStyles="w-96 rounded-md border-2 h-96 p-3"
-                            image={product.images[0]}
-                            price={product.price}
-                            productName={product.title}
-                            key={product.id}
-                            category={product.category.name}
-                        />
-                    ))}
+                    {productsByCategory?.length ? (
+                        productsByCategory.map((product) => (
+                            <ProductOfert
+                                id={product.id}
+                                description={product.description}
+                                cardStyles="w-96 rounded-md border-2 h-96 p-3"
+                                image={product.image}
+                                price={product.price}
+                                productName={product.title}
+                                key={product.id}
+                                category={product.category}
+                            />
+                        ))
+                    ) : category ? (
+                        <div className="w-full max-w-xs p-3 m-auto text-center border-2 rounded-md">
+                            <h2 className="text-2xl font-semibold text-foreground">Sin resultados</h2>
+                            <p className="text-lg text-foreground">No se encontraron productos</p>
+                        </div>
+                    ) : ''}
                 </div>
             </main>
         </>

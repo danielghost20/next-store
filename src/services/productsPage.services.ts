@@ -1,10 +1,10 @@
-import { Products, Categories } from "@/interfaces/product.interface";
+import { Products } from "@/interfaces/product.interface";
 import { axiosInstance } from "@/utils/axiosInstance";
 
 
-export async function getCategories (): Promise<Categories[]> {
+export async function getCategories (): Promise<string[]> {
     try {
-        const response = await axiosInstance.get('/categories/?offset=5&limit=5')
+        const response = await axiosInstance.get('/products/categories')
         return response.data
     } catch (error: any) {
         return error
@@ -20,25 +20,20 @@ export async function getProductById (id: number) : Promise<Products> {
     }
 }
 
-export async function getProductsByCategoryOrAll (categoryId?: number | null) : Promise<Products[]>  {
+export async function getProducts (): Promise<Products[]> {
     try {
-        if(categoryId) {
-            const response = await axiosInstance.get(`/categories/${categoryId}/products/?offset=1&limit=10`)
-            return response.data
-        } else {
-            const response = await axiosInstance.get('/products/?offset=1&limit=10')
-            return response.data
-        }
-    } catch (error: any) {
-        return error
-    }
-}
-
-export async function getSimilarProducts(categoryId: number | null) : Promise <Products[]> {
-    try {
-        const response = await axiosInstance.get(`/categories/${categoryId}/products/?offset=3&limit=3`)
+        const response = await axiosInstance.get('/products?limit=10')
         return response.data
     } catch (error: any) {
         return error
-    }
+    }    
+}
+
+export async function getSimilarProductsByCategory(category:string): Promise<Products[]> {
+    try {
+        const response = await axiosInstance.get(`/products/category/${category}`)
+        return response.data
+    } catch (error: any) {
+        return error
+    }   
 }
