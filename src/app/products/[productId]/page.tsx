@@ -7,10 +7,8 @@ import {
 } from "@/services/productsPage.services";
 import ProductOfert from "@/components/ProductOfert";
 import { Products } from "@/interfaces/product.interface";
-import { buttonVariants } from "@/components/ui/button";
-import { FaMoneyCheckAlt } from "react-icons/fa";
 import Image from "next/image";
-import { ButtonAdd } from "@/components/ButtonClient";
+import ButtonBuy, { ButtonAdd } from "@/components/ButtonClient";
 import ProductNabvar from "@/components/ProductNavbar";
 
 export default async function ProductPage({
@@ -26,8 +24,8 @@ export default async function ProductPage({
         id: product.id,
         image: product.image,
         name: product.title,
-        price: product.price
-    }
+        price: product.price,
+    };
 
     return (
         <>
@@ -48,22 +46,22 @@ export default async function ProductPage({
                         <p className="text-lg">Price: ${product.price} MNX</p>
                         <p className="text-lg">Categoria: {product.category}</p>
                         <div className="flex gap-5">
-                            <ButtonAdd
-                                item={prod}
-                            >
+                            <ButtonAdd item={prod}>
                                 Agregar al <LiaShoppingCartSolid className="text-lg" />
                             </ButtonAdd>
-                            <Link
-                                href="/"
-                                className={`${buttonVariants()} bg-background flex gap-2 text-foreground`}
-                            >
-                                Comprar <FaMoneyCheckAlt className="text-lg" />
-                            </Link>
+                            <ButtonBuy
+                                amount={prod.amount}
+                                category={prod.category}
+                                id={prod.id}
+                                image={prod.image}
+                                price={prod.price}
+                                name={prod.name}
+                            />
                         </div>
                     </div>
                 </div>
                 <h2 className="py-4 text-2xl text-center">Productos similares</h2>
-                <section className="flex justify-between w-full px-4">
+                <section className="flex flex-wrap justify-between w-full gap-4 px-4">
                     {(await productsByCategory).map((product: Products) => (
                         <ProductOfert
                             category={product.category}

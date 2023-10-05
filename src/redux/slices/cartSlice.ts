@@ -1,10 +1,12 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Cart } from "@/interfaces/cart.interface";
 
+
 type CartProps = {
   cart: Cart[] ;
   showCart: boolean;
 };
+
 
 
 const initialState: CartProps = {
@@ -16,8 +18,9 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    getItems: (state, action: PayloadAction<Cart[]>) => {
-      state.cart = action.payload
+    addItems: (state, action: PayloadAction<Cart>) => {
+      const data = action.payload
+      state.cart.push(data)
     },
     openCart: (state, action: PayloadAction<boolean>) => {
       state.showCart = action.payload;
@@ -28,5 +31,5 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { closeCart, openCart, getItems} = cartSlice.actions;
+export const { closeCart, openCart} = cartSlice.actions;
 export default cartSlice.reducer;

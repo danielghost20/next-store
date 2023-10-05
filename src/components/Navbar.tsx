@@ -5,23 +5,22 @@ import { FiGithub, FiShoppingBag } from "react-icons/fi";
 import { LiaShoppingCartSolid } from "react-icons/lia";
 import { ModeToggle } from "./ui/ModeToggle";
 import { userGetProfile } from "@/services/user.services";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserData } from "@/interfaces/user.interface";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { buttonVariants } from "./ui/button";
-import { useDispatch } from "react-redux";
-import { openCart } from "@/redux/slices/cartSlice";
+import cartContext from "@/context/CartContext";
 
 
 
 export default function Navbar() {
     const [user, setUser] = useState<undefined | UserData>(undefined);
-
-    const dispatch = useDispatch()
+    const { features: { handleShowCart }, cartState } = useContext(cartContext)
 
     useEffect(() => {
         userGetProfile().then((res) => setUser(res));
     }, []);
+
 
 
     return (
@@ -54,7 +53,7 @@ export default function Navbar() {
                 <a className="flex items-center p-2 border-2 rounded-md cursor-pointer">
                     <FiGithub className="text-xl" />
                 </a>
-                <span onClick={() => dispatch(openCart(true))} className="flex items-center p-1 border-2 rounded-md cursor-pointer">
+                <span onClick={handleShowCart} className="flex items-center p-1 border-2 rounded-md cursor-pointer">
                     <LiaShoppingCartSolid className="text-3xl" />
                 </span>
                 <ModeToggle />

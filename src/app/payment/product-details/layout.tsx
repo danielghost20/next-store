@@ -2,6 +2,8 @@ import React from "react";
 import Link from "next/link";
 import { FiShoppingBag, FiGithub } from 'react-icons/fi'
 import { ModeToggle } from "@/components/ui/ModeToggle";
+import PaymentCartList from "@/components/PaymentCartList";
+import RoutesPayment from "@/components/RoutesPayment";
 
 type ChildrenProps = {
     children: React.ReactNode;
@@ -27,14 +29,12 @@ export default function Layout({ children }: ChildrenProps) {
                 <div className="flex justify-between">
                     <div className="w-full h-screen overflow-y-scroll">
                         <div className="w-full px-4 mt-24 ">
-                            <p>
-                                ruta {">"} pago {">"} negocio
-                            </p>
+                            <RoutesPayment />
                         </div>
                         <div className="w-full ">{children}</div>
                     </div>
-                    <div className="w-full h-screen max-w-md pt-20 border-l-2">
-                        <h2>sadsadsad</h2>
+                    <div className="flex flex-col w-full h-screen max-w-md px-3 pt-20 border-l-2">
+                        <PaymentCartList />
                     </div>
                 </div>
             </main>

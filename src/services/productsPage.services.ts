@@ -31,9 +31,18 @@ export async function getProducts (): Promise<Products[]> {
 
 export async function getSimilarProductsByCategory(category:string): Promise<Products[]> {
     try {
-        const response = await axiosInstance.get(`/products/category/${category}`)
+        const response = await axiosInstance.get(`/products/category/${category}?limit=6`)
         return response.data
     } catch (error: any) {
         return error
     }   
+}
+
+export async function getProductsBySearch (): Promise <Products[]> {
+    try {
+        const response = await axiosInstance.get('/products?limit=20')
+        return response.data
+    } catch (error: any) {
+        return error
+    }
 }

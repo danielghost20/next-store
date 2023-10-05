@@ -1,11 +1,10 @@
 "use client";
 import { Button, buttonVariants } from "./ui/button";
 import { Cart } from "@/interfaces/cart.interface";
-import { useSelector } from "react-redux";
 import { FaMoneyCheckAlt } from "react-icons/fa";
 import Link from "next/link";
-import React from "react";
-import useLocalStorage from "@/hooks/useLocalStorage";
+import CartContext from "@/context/CartContext";
+import { useContext, useState, useCallback, useEffect } from "react";
 
 type StateProps = {
     cart: {
@@ -25,41 +24,41 @@ export function ButtonAdd({
     children: React.ReactNode;
     item: Cart;
 }) {
-    const productsInCart = useSelector((state: StateProps) => state.cart.cart);
-    let isProductInCart: boolean = false;
-    if (productsInCart.length !== 0 && productsInCart.length > 0) {
-        isProductInCart = productsInCart.some((prod) => item.id === prod.id);
-    }
-    const { addItemToCart } = useLocalStorage({ key: "cart", initialState: [] });
+    const [isProductInCart, setIsProductInCart] = useState<boolean>(false);
+    const {
+        features: { addProductToCart },
+        items,
+    } = useContext(CartContext);
 
-    const handleCart = (e: React.MouseEvent<HTMLButtonElement>, prod: Cart) => {
-        addItemToCart(prod);
-        const button = e.currentTarget;
-        button.disabled = true;
-    };
+    useEffect(() => {
+        setIsProductInCart(items.some((prod) => item.id === prod.id));
+    }, [items])
+
+    const handleCart = useCallback(() => {
+        addProductToCart(item);
+        console.log(item);
+    }, [addProductToCart, item]);
 
     return isProductInCart ? (
-        <div className="max-w-max rounded-md border-2 flex items-center justify-center px-3 py-1 opacity-40 cursor-not-allowed ">
+        <div className="flex items-center justify-center px-3 py-1 border-2 rounded-md cursor-not-allowed max-w-max opacity-40 ">
             Agregado
         </div>
     ) : (
-        <Button
-            className="flex gap-2 max-w-max"
-            onClick={(e) => handleCart(e, item)}
-        >
-            {isProductInCart ? "Agregado" : children}
+        <Button className="flex gap-2 max-w-max" onClick={handleCart}>
+            {children}
         </Button>
     );
 }
 
 export default function ButtonBuy(item: Cart) {
-    let isProductInCart: boolean = false;
-    const productsInCart = useSelector((state: StateProps) => state.cart.cart);
-    if (productsInCart.length !== 0 && productsInCart.length > 0) {
-        isProductInCart = productsInCart.some((prod) => item.id === prod.id);
-    }
+    const [isProductInCart, setIsProductInCart] = useState<boolean>(false);
+    const { items } = useContext(CartContext);
+
+    useEffect(() => {
+        setIsProductInCart(items.some((prod) => item.id === prod.id));
+    }, [items])
     return isProductInCart ? (
-        <div className="max-w-max rounded-md border-2 flex items-center justify-center px-3 py-1 opacity-40 cursor-not-allowed">
+        <div className="flex items-center justify-center px-3 py-1 border-2 rounded-md cursor-not-allowed max-w-max opacity-40">
             Disponible en carro
         </div>
     ) : (

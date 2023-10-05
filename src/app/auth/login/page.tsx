@@ -1,5 +1,5 @@
 "use client";
-import Cookie from 'js-cookie'
+import Cookie from "js-cookie";
 import { Input } from "@/components/ui/Input";
 import { buttonVariants } from "@/components/ui/button";
 import Image from "next/image";
@@ -9,18 +9,23 @@ import { BsArrowLeft } from "react-icons/bs";
 import { userSingIn } from "@/services/auth.services";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Credentials } from "@/interfaces/auth.interface";
-import { useRouter } from 'next/navigation';
-
-
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-    const { register, handleSubmit, formState: { errors } } = useForm<Credentials>()
-    const router = useRouter()
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<Credentials>();
+    const router = useRouter();
+
     const onSubmit: SubmitHandler<Credentials> = (data: Credentials) => {
         userSingIn({ email: data.email, password: data.password })
-            .then((res: any) => { Cookie.set('token', res.accessToken), router.push('/') })
-            .catch(err => console.log('hubo un error'))
-    }
+            .then((res: any) => {
+                Cookie.set("token", res.accessToken), router.push("/");
+            })
+            .catch((err) => console.log("hubo un error"));
+    };
 
     return (
         <main className="flex w-full h-screen">
@@ -34,19 +39,55 @@ export default function LoginPage() {
                 />
             </div>
             <div className="flex items-center justify-center w-1/2 px-2 ">
-                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full max-w-sm gap-5 p-4 border-2 rounded-md ">
+                <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="flex flex-col w-full max-w-sm gap-5 p-4 border-2 rounded-md "
+                >
                     <h2 className="text-xl text-center">Iniciar Secion</h2>
                     <div className="flex flex-col gap-3">
                         <label htmlFor="email">Correo</label>
-                        <Input {...register('email', { required: true, maxLength: { value: 40, message: 'Maximo 20 caracteres' }, minLength: { value: 5, message: 'Minimo 5 caracteres' } })} name="email" id="email" type="email" placeholder="example@gmail.com" />
-                        {errors.email?.message ? <p className="text-base text-red-500">{errors.email.message}</p> : <p className="py-2"></p>}
+                        <Input
+                            {...register("email", {
+                                required: true,
+                                maxLength: { value: 40, message: "Maximo 20 caracteres" },
+                                minLength: { value: 5, message: "Minimo 5 caracteres" },
+                            })}
+                            name="email"
+                            id="email"
+                            type="email"
+                            placeholder="example@gmail.com"
+                        />
+                        {errors.email?.message ? (
+                            <p className="text-base text-red-500">{errors.email.message}</p>
+                        ) : (
+                            <p className="py-2"></p>
+                        )}
                     </div>
                     <div className="flex flex-col gap-3">
                         <label htmlFor="password">Password</label>
-                        <Input {...register('password', { required: true, maxLength: { value: 30, message: 'Maximo 15 caracteres' }, minLength: { value: 5, message: 'Minimo 5 caracteres' } })} name="password" id="password" type="text" placeholder="213j432-fdjSS12" />
-                        {errors.password?.message ? <p className="text-base text-red-500">{errors.password.message}</p> : <p className="py-2"></p>}
+                        <Input
+                            {...register("password", {
+                                required: true,
+                                maxLength: { value: 30, message: "Maximo 15 caracteres" },
+                                minLength: { value: 5, message: "Minimo 5 caracteres" },
+                            })}
+                            name="password"
+                            id="password"
+                            type="text"
+                            placeholder="213j432-fdjSS12"
+                        />
+                        {errors.password?.message ? (
+                            <p className="text-base text-red-500">
+                                {errors.password.message}
+                            </p>
+                        ) : (
+                            <p className="py-2"></p>
+                        )}
                     </div>
-                    <button type="submit" className="w-full px-3 py-2 border-2 rounded-md bg-background text-foreground">
+                    <button
+                        type="submit"
+                        className="w-full px-3 py-2 border-2 rounded-md bg-background text-foreground"
+                    >
                         Iniciar Sesion
                     </button>
                     <button
