@@ -1,24 +1,21 @@
-"use client"
+"use client";
 
-import { Cart } from "@/interfaces/cart.interface";
 import { useState, useEffect } from "react";
 
-export default function useLocalStorage(key: string, initialState: Cart[]) {
-  const [cartItems, setCartItems] = useState<Cart[]>([]);
-  useEffect(() => {
-    const items = localStorage.getItem(key);
-    if (items) {
-      setCartItems(JSON.parse(items));
+export default function useLocalStorage(key: string, initialState: any) {
+  const [value, setValue] = useState<any>(() => {
+    if (localStorage !== undefined) {
+      const items = localStorage.getItem(key);
+      return items ? JSON.parse(items) : initialState;
     }
-  }, []);
 
+  });
 
   useEffect(() => {
-    if (cartItems.length > 0) {
-      localStorage.setItem(key, JSON.stringify(cartItems));
+    if (value) {
+      localStorage.setItem(key, JSON.stringify(value));
     }
-  }, [cartItems])
+  }, [key, value]);
 
-  return [cartItems, setCartItems];
-
+  return [value, setValue];
 }

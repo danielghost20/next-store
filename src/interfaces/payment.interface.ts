@@ -9,7 +9,7 @@ export interface UserContact {
 }
 
 export interface CreditCard {
-    number_credit_card: number | null,
-    CVV: number | null,
-    expiration_date: number | null
+    number_credit_card: string,
+    CVV: string,
+    expiration_date: string
 }

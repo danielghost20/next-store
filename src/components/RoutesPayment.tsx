@@ -15,7 +15,7 @@ export default function RoutesPayment() {
         },
         {
             name: 'confirmar compra',
-            url: '/payment/product-details/payment-success'
+            url: '/payment/product-details/payment-card/payment-confirm'
         }
     ]
     return (
