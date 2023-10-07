@@ -7,6 +7,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { UserContact } from "@/interfaces/payment.interface";
 import { useRouter } from "next/navigation";
 import { usePaymentContext } from "@/context/PaymentContext";
+import { useEffect, useState } from "react";
 
 export default function ProductDetailsPage() {
     const router = useRouter();
@@ -17,12 +18,14 @@ export default function ProductDetailsPage() {
     } = useForm<UserContact>();
     const {
         features: { addUserAddress },
+        user_contact,
     } = usePaymentContext();
 
     const onSubmit: SubmitHandler<UserContact> = (data: UserContact) => {
-        addUserAddress(data)
-        router.push('/payment/product-details/payment-card')
+        addUserAddress(data);
+        router.push("/payment/product-details/payment-card");
     };
+
     return (
         <div className="w-full max-w-xl px-2 m-auto mt-10">
             <h2 className="py-2 text-xl font-bold">Contacto</h2>
@@ -39,6 +42,7 @@ export default function ProductDetailsPage() {
                     type="email"
                     className="w-full"
                     placeholder="Correo electronico"
+                    defaultValue={user_contact ? user_contact.email : ""}
                 />
                 {errors.email?.message ? (
                     <span className="py-2 text-red-600">{errors.email.message}</span>
@@ -58,6 +62,7 @@ export default function ProductDetailsPage() {
                             type="text"
                             className="w-full"
                             placeholder="Nombre"
+                            defaultValue={user_contact ? user_contact.name : ""}
                         />
                         {errors.name?.message ? (
                             <span className="py-2 text-red-600">{errors.name.message}</span>
@@ -75,6 +80,7 @@ export default function ProductDetailsPage() {
                             type="text"
                             className="w-full"
                             placeholder="Apellido"
+                            defaultValue={user_contact ? user_contact.last_name : ""}
                         />
                         {errors.last_name?.message ? (
                             <span className="py-2 text-red-600">
@@ -94,6 +100,7 @@ export default function ProductDetailsPage() {
                     type="text"
                     className="w-full py-3"
                     placeholder="Direccion o referencia"
+                    defaultValue={user_contact ? user_contact.reference_address : ""}
                 />
                 {errors.reference_address?.message ? (
                     <span className="py-2 text-red-600">
@@ -111,6 +118,7 @@ export default function ProductDetailsPage() {
                             })}
                             type="text"
                             placeholder="Ciudad"
+                            defaultValue={user_contact ? user_contact.city : ""}
                         />
                         {errors.city?.message ? (
                             <span className="py-2 text-red-600">{errors.city.message}</span>
@@ -126,6 +134,7 @@ export default function ProductDetailsPage() {
                             })}
                             type="text"
                             placeholder="Pais"
+                            defaultValue={user_contact ? user_contact.country : ""}
                         />
                         {errors.country?.message ? (
                             <span className="py-2 text-red-600">
@@ -143,6 +152,7 @@ export default function ProductDetailsPage() {
                             })}
                             type="text"
                             placeholder="Codigo Postal"
+                            defaultValue={user_contact ? user_contact.postal_code : ""}
                         />
                         {errors.postal_code?.message ? (
                             <span className="py-2 text-red-600">
@@ -161,15 +171,11 @@ export default function ProductDetailsPage() {
                         <BsArrowLeft />
                         Regresar
                     </button>
-                    <button
-                        type="submit"
-                        className={`${buttonVariants()}  `}
-                    >
+                    <button type="submit" className={`${buttonVariants()}  `}>
                         Continuar compra
                     </button>
                 </div>
             </form>
-
         </div>
     );
 }

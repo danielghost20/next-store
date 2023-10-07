@@ -2,7 +2,7 @@
 
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { CreditCard, UserContact } from "@/interfaces/payment.interface";
-import React, { Dispatch, SetStateAction, createContext, useContext, useState } from "react";
+import React, { Dispatch, SetStateAction, createContext, useContext } from "react";
 
 type PaymentContext = {
     user_contact: UserContact;

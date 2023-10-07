@@ -37,7 +37,7 @@ export default function Layout({ children }: ChildrenProps) {
                             </div>
                             <div className="w-full ">{children}</div>
                         </div>
-                        <div className="flex flex-col w-full h-screen max-w-md px-3 pt-20 border-l-2">
+                        <div className="flex flex-col w-full h-screen max-w-md px-3 pt-20 overflow-y-scroll border-l-2">
                             <TotalCart />
                             <PaymentCartList />
                         </div>
