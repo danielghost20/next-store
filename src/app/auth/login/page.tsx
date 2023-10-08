@@ -22,9 +22,12 @@ export default function LoginPage() {
     const onSubmit: SubmitHandler<Credentials> = (data: Credentials) => {
         userSingIn({ email: data.email, password: data.password })
             .then((res: any) => {
-                Cookie.set("token", res.accessToken), router.push("/");
+                console.log(res)
+                if (res.accessToken !== undefined) {
+                    Cookie.set("token", res.accessToken), router.push("/");
+                }
             })
-            .catch((err) => console.log("hubo un error"));
+            .catch((err) => console.log("hubo un error", err));
     };
 
     return (

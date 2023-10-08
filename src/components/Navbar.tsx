@@ -10,15 +10,18 @@ import { UserData } from "@/interfaces/user.interface";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { buttonVariants } from "./ui/button";
 import cartContext from "@/context/CartContext";
-
+import { userSingOut } from "@/services/auth.services";
+import { auth } from "@/app/firebase";
 
 
 export default function Navbar() {
     const [user, setUser] = useState<undefined | UserData>(undefined);
-    const { features: { handleShowCart }, cartState } = useContext(cartContext)
+
+    const { features: { handleShowCart } } = useContext(cartContext)
 
     useEffect(() => {
-        userGetProfile().then((res) => setUser(res));
+        userGetProfile()
+            .then(credentials => setUser(user))
     }, []);
 
 
@@ -29,15 +32,20 @@ export default function Navbar() {
                 <Link className="p-2 border-2 rounded-md" href="/">
                     <FiShoppingBag className="text-xl" />
                 </Link>
-                {user !== undefined && user !== null ? (
-                    <Avatar>
-                        <AvatarImage
-                            src={
-                                user.photoURL ? user.photoURL : "https://github.com/shadcn.png"
-                            }
-                        />
-                        <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
+                {user !== undefined ? (
+                    <>
+                        <Avatar>
+                            <AvatarImage
+                                src={
+                                    user.photoURL ? user.photoURL : "https://github.com/shadcn.png"
+                                }
+                            />
+                            <AvatarFallback>CN</AvatarFallback>
+                        </Avatar>
+                        <button onClick={userSingOut}>
+                            salir
+                        </button>
+                    </>
                 ) : (
                     <Link
                         href="/auth/register"

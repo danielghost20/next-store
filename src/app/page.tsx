@@ -9,6 +9,7 @@ import Navbar from "@/components/Navbar";
 export default async function Home() {
   const products = await getProducts();
 
+
   return (
     <>
       <header>

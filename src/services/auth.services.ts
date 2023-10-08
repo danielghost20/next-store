@@ -7,6 +7,7 @@ import {
 } from "firebase/auth";
 import { auth, db } from "@/app/firebase";
 import { addDoc, collection } from "firebase/firestore";
+import Cookies from 'js-cookie'
 
 // Esta funcion es para subir usuarios, esta usando trycatch para retornar el resultado y pueda ser usado en la pagina de registro o inicio de secion
 // Cuando se crea el usuario solo se envia el correo y la contraseña, por lo cual es necesario que despues de esto, se actualice el usuario agregando el numero de telefono y la imagen, (la foto puede ser opcional pero se le debe mandar ya sea una foto o cadena vacia)
@@ -59,6 +60,7 @@ export async function userSingIn({ email, password }: Credentials) {
 export async function userSingOut() {
   try {
     const response = await signOut(auth);
+    Cookies.remove('token')
     return response;
   } catch (error) {
     return error;

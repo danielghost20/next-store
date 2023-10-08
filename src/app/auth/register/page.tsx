@@ -157,7 +157,7 @@ export default function RegisterPage() {
                     <button className={`${buttonVariants()} w-full`}>Registrate</button>
                     <div className="flex justify-center w-full gap-3 mt-2">
                         <span>¿Ya tienes una cuenta?</span>
-                        <Link className="text-blue-500 border-b-2" href="/">
+                        <Link className="text-blue-500 border-b-2" href="/auth/login">
                             Registrate aqui
                         </Link>
                     </div>

@@ -7,7 +7,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { UserContact } from "@/interfaces/payment.interface";
 import { useRouter } from "next/navigation";
 import { usePaymentContext } from "@/context/PaymentContext";
-import { useEffect, useState } from "react";
+import cookies from 'js-cookie'
+
 
 export default function ProductDetailsPage() {
     const router = useRouter();
@@ -25,6 +26,9 @@ export default function ProductDetailsPage() {
         addUserAddress(data);
         router.push("/payment/product-details/payment-card");
     };
+
+    console.log(cookies.get('token'))
+    console.log('mi cookiesadd a ad')
 
     return (
         <div className="w-full max-w-xl px-2 m-auto mt-10">
