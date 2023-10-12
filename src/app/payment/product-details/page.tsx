@@ -27,9 +27,6 @@ export default function ProductDetailsPage() {
         router.push("/payment/product-details/payment-card");
     };
 
-    console.log(cookies.get('token'))
-    console.log('mi cookiesadd a ad')
-
     return (
         <div className="w-full max-w-xl px-2 m-auto mt-10">
             <h2 className="py-2 text-xl font-bold">Contacto</h2>

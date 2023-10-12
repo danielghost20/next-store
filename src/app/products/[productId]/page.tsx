@@ -1,15 +1,14 @@
 import Link from "next/link";
 import { LiaShoppingCartSolid } from "react-icons/lia";
-
 import {
     getProductById,
     getSimilarProductsByCategory,
 } from "@/services/productsPage.services";
-import ProductOfert from "@/components/ProductOfert";
+import Product from "@/components/Product";
 import { Products } from "@/interfaces/product.interface";
 import Image from "next/image";
 import ButtonBuy, { ButtonAdd } from "@/components/ButtonClient";
-import ProductNabvar from "@/components/ProductNavbar";
+import Navbar from "@/components/Navbar";
 
 export default async function ProductPage({
     params,
@@ -17,34 +16,36 @@ export default async function ProductPage({
     params: { productId: number };
 }) {
     const product = await getProductById(params.productId);
-    const productsByCategory = getSimilarProductsByCategory(product.category);
+    const productsByCategory = await getSimilarProductsByCategory(product.category.id);
     const prod = {
         amount: 1,
-        category: product.category,
+        category: product.category.name,
         id: product.id,
-        image: product.image,
+        image: product.images[1],
         name: product.title,
         price: product.price,
     };
 
     return (
         <>
-            <ProductNabvar />
+            <header className="w-full">
+                <Navbar search={true} />
+            </header>
             <main className="m-auto mt-10 max-w-screen-2xl">
                 <div className="flex justify-center w-full min-h-screen gap-10 px-3">
                     <div className="max-w-xl">
                         <Image
-                            src={product.image}
+                            src={product.images[1]}
                             width={500}
                             height={500}
-                            alt={product.image}
+                            alt={product.images[1]}
                         />
                     </div>
                     <div className="flex flex-col max-w-lg gap-5">
                         <h2 className="text-3xl font-semibold">{product.title}</h2>
                         <p className="text-lg">{product.description}</p>
                         <p className="text-lg">Price: ${product.price} MNX</p>
-                        <p className="text-lg">Categoria: {product.category}</p>
+                        <p className="text-lg">Categoria: {product.category.name}</p>
                         <div className="flex gap-5">
                             <ButtonAdd item={prod}>
                                 Agregar al <LiaShoppingCartSolid className="text-lg" />
@@ -62,18 +63,20 @@ export default async function ProductPage({
                 </div>
                 <h2 className="py-4 text-2xl text-center">Productos similares</h2>
                 <section className="flex flex-wrap justify-between w-full gap-4 px-4">
-                    {(await productsByCategory).map((product: Products) => (
-                        <ProductOfert
-                            category={product.category}
-                            cardStyles="w-[340px] h-[400px] border-2 p-4  rounded-md"
-                            description={product.description}
-                            id={product.id}
-                            image={product.image}
-                            price={product.price}
-                            productName={product.title}
-                            key={product.id}
-                        />
-                    ))}
+                    {
+                        productsByCategory.map((product: Products) => (
+                            <Product
+                                category={product.category.name}
+                                cardStyles="w-[340px] h-[400px] border-2 p-4  rounded-md"
+                                description={product.description}
+                                id={product.id}
+                                image={product.images[0]}
+                                price={product.price}
+                                productName={product.title}
+                                key={product.id}
+                            />
+                        ))
+                    }
                 </section>
             </main>
             <footer className="flex items-center w-full py-6 mt-10 border-2 justify-evenly px-7 ">

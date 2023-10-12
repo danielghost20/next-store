@@ -1,7 +1,7 @@
 "use client";
 
 import { Cart } from "@/interfaces/cart.interface";
-import { Dispatch, SetStateAction, createContext, useState } from "react";
+import { Dispatch, SetStateAction, createContext, useContext, useState } from "react";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import React from "react";
 
@@ -32,6 +32,10 @@ const cartContext = createContext<CartContextType>({
         incrementProductAmount(id) { },
     },
 });
+
+export const useCartContext = () => {
+    return useContext(cartContext)
+}
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
     const [showCart, setShowCart] = useState<boolean>(false);

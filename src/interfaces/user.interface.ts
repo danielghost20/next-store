@@ -4,3 +4,4 @@ export interface UserData {
     photoURL: string | null,
     emailVerified: boolean
 }
+

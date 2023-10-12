@@ -16,7 +16,7 @@ type ProductProps = {
     category: string
 }
 
-export default function ProductOfert({ cardStyles, image, price, productName, description, id, category }: ProductProps) {
+export default function Product({ cardStyles, image, price, productName, description, id, category }: ProductProps) {
     return (
         <div className={`${cardStyles} overflow-hidden flex flex-col gap-2 relative`}>
             <div className="relative w-full overflow-hidden h-72">

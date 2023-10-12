@@ -36,7 +36,6 @@ export function ButtonAdd({
 
     const handleCart = useCallback(() => {
         addProductToCart(item);
-        console.log(item);
     }, [addProductToCart, item]);
 
     return isProductInCart ? (

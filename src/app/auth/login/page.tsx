@@ -1,15 +1,17 @@
 "use client";
-import Cookie from "js-cookie";
 import { Input } from "@/components/ui/Input";
 import { buttonVariants } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { BsArrowLeft } from "react-icons/bs";
-import { userSingIn } from "@/services/auth.services";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Credentials } from "@/interfaces/auth.interface";
 import { useRouter } from "next/navigation";
+import { userSingIn } from "@/services/auth.services";
+import Cookies from "js-cookie";
+import { useState } from "react";
+
 
 export default function LoginPage() {
     const {
@@ -19,15 +21,19 @@ export default function LoginPage() {
     } = useForm<Credentials>();
     const router = useRouter();
 
+    const [error, setError] = useState<string>('')
+
     const onSubmit: SubmitHandler<Credentials> = (data: Credentials) => {
         userSingIn({ email: data.email, password: data.password })
-            .then((res: any) => {
-                console.log(res)
-                if (res.accessToken !== undefined) {
-                    Cookie.set("token", res.accessToken), router.push("/");
+            .then((user: any) => {
+                console.log(user)
+                if (user.accessToken) {
+                    Cookies.set('user_acccess_token', user.accessToken)
+                } else {
+                    setError('credenciales incorrectas')
                 }
             })
-            .catch((err) => console.log("hubo un error", err));
+            .catch(err => { setError('Credenciales Incorrectas') })
     };
 
     return (
@@ -47,6 +53,7 @@ export default function LoginPage() {
                     className="flex flex-col w-full max-w-sm gap-5 p-4 border-2 rounded-md "
                 >
                     <h2 className="text-xl text-center">Iniciar Secion</h2>
+                    {error !== '' ? <span className="text-red-600">{error}</span> : ''}
                     <div className="flex flex-col gap-3">
                         <label htmlFor="email">Correo</label>
                         <Input
@@ -106,7 +113,7 @@ export default function LoginPage() {
                             <BsArrowLeft />
                             Regresar
                         </Link>
-                        <Link href="/" className="text-sm text-blue-500">
+                        <Link href="/auth/register" className="text-sm text-blue-500">
                             Crea una cuenta aqui
                         </Link>
                     </div>

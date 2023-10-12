@@ -1,9 +1,13 @@
-import Image from "next/image";
+"use client"
 import { BsFillCheckSquareFill } from 'react-icons/bs'
 import { RiVisaLine } from 'react-icons/ri'
-
+import { usePaymentContext } from '@/context/PaymentContext'
 
 export default function PaymentConfirmPage() {
+
+    const { user_contact, credit_card } = usePaymentContext()
+
+
     return (
         <>
             <main className="w-full p-5 m-auto mt-10">
@@ -20,37 +24,37 @@ export default function PaymentConfirmPage() {
                     <h2 className="text-2xl font-semibold">Datos de pago</h2>
                     <div className="flex w-full mt-3 justify-evenly">
                         <div className="w-full max-w-max">
-                            <h3 className="font-bold">Informacion</h3>
-                            <span className="text-gray-500">ipsam, voluptates</span>
+                            <h3 className="font-bold">Estado</h3>
+                            <span className="text-gray-500">{user_contact.country}</span>
                         </div>
                         <div className="w-full max-w-max">
-                            <h3 className="font-bold">Informacion</h3>
-                            <span className="text-gray-500">ipsam, voluptates</span>
+                            <h3 className="font-bold">Ciudad</h3>
+                            <span className="text-gray-500">{user_contact.city}</span>
                         </div>
                         <div className="w-full max-w-max">
-                            <h3 className="font-bold">Informacion</h3>
-                            <span className="text-gray-500">ipsam, voluptates</span>
+                            <h3 className="font-bold">Codigo Postal</h3>
+                            <span className="text-gray-500">{user_contact.postal_code}</span>
                         </div>
                     </div>
-                    <div className="flex w-full mt-3 justify-evenly">
+                    <div className="flex flex-wrap w-full mt-3 justify-evenly">
                         <div className="w-full max-w-max">
-                            <h3 className="font-bold">Informacion</h3>
-                            <span className="text-gray-500">ipsam, voluptates</span>
+                            <h3 className="font-bold">Email</h3>
+                            <span className="text-gray-500">{user_contact.email}</span>
                         </div>
                         <div className="w-full max-w-max">
-                            <h3 className="font-bold">Informacion</h3>
-                            <span className="text-gray-500">ipsam, voluptates</span>
+                            <h3 className="font-bold">Nombre</h3>
+                            <span className="text-gray-500">{user_contact.last_name}</span>
                         </div>
                         <div className="w-full max-w-max">
-                            <h3 className="font-bold">Informacion</h3>
-                            <span className="text-gray-500">ipsam, voluptates</span>
+                            <h3 className="font-bold">Direccion</h3>
+                            <span className="text-gray-500">{user_contact.reference_address}</span>
                         </div>
                     </div>
                     <div className="w-full max-w-xs p-2 duration-200 bg-gray-200 border-2 rounded-md dark:bg-gray-900 text-foreground">
                         <RiVisaLine className="text-6xl" />
-                        <span className="my-3 text-xl font-semibold text-center ">1234 1234 1231 3232</span>
+                        <span className="my-3 text-xl font-semibold text-center ">{credit_card.number_credit_card}</span>
                         <div className="flex justify-between w-full my-2">
-                            <span className="text-lg">12/23</span>
+                            <span className="text-lg">{credit_card.expiration_date}</span>
                             <span className="text-lg">- - -</span>
                         </div>
                     </div>

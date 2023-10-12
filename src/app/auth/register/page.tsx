@@ -25,15 +25,16 @@ export default function RegisterPage() {
 
     const onSubmit: SubmitHandler<FormProps> = (data: FormProps) => {
         userSingUp(
-            { email: data.email, password: data.password },
             {
                 name: data.name,
                 last_name: data.last_name,
                 photoURL: "https://github.com/shadcn.png",
                 phoneNumber: data.phoneNumber,
+                email: data.email,
+                password: data.password
             }
         ).then((res: any) => {
-            Cookie.set("token", res.accessToken);
+            Cookie.set("user_acccess_token", res.accessToken);
             router.push("/");
         });
     };
@@ -154,7 +155,7 @@ export default function RegisterPage() {
                             <p className="py-3"></p>
                         )}
                     </div>
-                    <button className={`${buttonVariants()} w-full`}>Registrate</button>
+                    <button type="submit" className={`${buttonVariants()} w-full`}>Registrate</button>
                     <div className="flex justify-center w-full gap-3 mt-2">
                         <span>¿Ya tienes una cuenta?</span>
                         <Link className="text-blue-500 border-b-2" href="/auth/login">

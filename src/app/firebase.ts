@@ -19,7 +19,7 @@ const firebaseConfig = {
   storageBucket: "next-store-af81e.appspot.com",
 
   messagingSenderId: "879645154550",
-
+  
   appId: "1:879645154550:web:f4061a9f3747c939fc20d7",
 };
 

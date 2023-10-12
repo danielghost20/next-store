@@ -1,10 +1,31 @@
-"use client"
+"use client";
 import CartContext from "@/context/CartContext";
 import { buttonVariants } from "./ui/button";
-import { useContext } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import { CreditCard } from "@/interfaces/payment.interface";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+
 
 export default function TotalCart() {
-    const { items, features: { totalProducts } } = useContext(CartContext)
+    const [activePaymentButton, setActivePaymentButton] = useState(false)
+    const {
+        items,
+        features: { totalProducts },
+    } = useContext(CartContext);
+    const [userCreditCard, setUserCreditCard] = useLocalStorage('card', {}) as [CreditCard, Dispatch<SetStateAction<CreditCard>>]
+    const path = usePathname()
+
+    useEffect(() => {
+        if (path.endsWith('payment-confirm')) {
+            setActivePaymentButton(true)
+        } else {
+            setActivePaymentButton(false)
+        }
+    }, [path])
+
+
     return (
         <div className="w-full p-3 mt-5 border-2 border-t-8 rounded-md border-t-green-200 dark:border-t-[#C6DE41] ">
             <h2 className="py-2 text-xl font-semibold">Total de productos</h2>
@@ -26,13 +47,23 @@ export default function TotalCart() {
                         <span>$ 00.00</span>
                     </div>
                     <div className="flex justify-between w-full py-1">
-                        <span className="text-xl font-semibold text-green-700 dark:text-[#C6DE41]">Total</span>
-                        <span className="text-xl font-semibold text-green-700 dark:text-[#C6DE41]">$ {totalProducts()}</span>
+                        <span className="text-xl font-semibold text-green-700 dark:text-[#C6DE41]">
+                            Total
+                        </span>
+                        <span className="text-xl font-semibold text-green-700 dark:text-[#C6DE41]">
+                            $ {totalProducts()}
+                        </span>
                     </div>
                 </div>
-                <button className={`${buttonVariants()} my-3`}>Comprar</button>
-                <span className="m-auto text-sm text-gray-500">Hecho por <span className="font-semibold">Daniel Ramos</span></span>
+                {activePaymentButton ? (
+                    <Link href='/payment/payment-success' className={`${buttonVariants()} my-3`}>Comprar</Link>
+                ) : (
+                    <div className={`${buttonVariants()} my-3 opacity-40 cursor-not-allowed`}>Comprar</div>
+                )}
+                <span className="m-auto text-sm text-gray-500">
+                    Hecho por <span className="font-semibold">Daniel Ramos</span>
+                </span>
             </div>
         </div>
-    )
+    );
 }

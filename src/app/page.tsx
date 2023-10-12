@@ -1,24 +1,25 @@
 import PriceTag from "@/components/PriceTag";
-import ProductOfert from "@/components/ProductOfert";
+import Product from "@/components/Product";
 import { Products } from "@/interfaces/product.interface";
 import { getProducts } from "@/services/productsHome.services";
 import Image from "next/image";
 import Link from 'next/link';
 import Navbar from "@/components/Navbar";
+import { getProductsBySearch } from "@/services/productsPage.services";
 
 export default async function Home() {
+
   const products = await getProducts();
+  const items = await getProductsBySearch()
 
 
   return (
     <>
       <header>
-        <Navbar />
+        <Navbar search={true} />
         <div className="flex items-center justify-center w-full gap-4 py-3 my-10 border-y-2">
           <Link className="text-lg" href='/products'>Productos</Link>
-          <Link className="text-lg" href='/'>Ofertas</Link>
-          <Link className="text-lg" href='/'>Articulos</Link>
-          <Link className="text-lg" href='/'>Lo nuevo</Link>
+          <Link className="text-lg" href='/profile'>Perfil</Link>
         </div>
         <div className="grid w-full h-[900px] grid-cols-2 grid-rows-2 gap-4 px-3 m-auto max-w-screen-2xl">
           <div className="relative flex items-center justify-center w-full h-full row-start-1 row-end-3 border-2 rounded-md ">
@@ -58,15 +59,15 @@ export default async function Home() {
         <h2 className="py-5 text-3xl text-center">Mas Articulos</h2>
         <section className="flex flex-wrap gap-10 p-3 mt-5 justify-evenly">
           {products.map((product: Products) => (
-            <ProductOfert
+            <Product
               id={product.id}
               key={product.id}
               price={product.price}
-              image={product.image}
+              image={product.images[1]}
               cardStyles="w-[340px] h-[400px] border-2  rounded-md"
               productName={product.title}
               description={product.description}
-              category={product.category}
+              category={product.category.name}
             />
           ))}
         </section>
