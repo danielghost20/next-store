@@ -48,7 +48,6 @@ export async function userSingIn({ email, password }: Credentials) {
     return credentials.user;
   } catch (error) {
     return error;
-    console.log('erjtro al aerrror')
   }
 }
 
@@ -57,7 +56,6 @@ export async function userSingOut() {
   try {
     const response = await signOut(auth);
     Cookies.remove('user_acccess_token')
-    window.location.reload()
     return response;
   } catch (error) {
     return error;

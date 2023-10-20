@@ -6,6 +6,7 @@ import { userSingIn, userSingOut, userSingUp } from "@/services/auth.services";
 import { Credentials } from "@/interfaces/auth.interface";
 import { userSingUpData } from "@/interfaces/auth.interface";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 type UserAuthContextType = {
     user: User | null;
@@ -40,13 +41,14 @@ export const useUserContext = () => {
 };
 
 export function UserProvider({ children }: { children: React.ReactNode }) {
-    const [user, setUser] = useState<null | User>(null);
+    const {data} = useSession()
+    const [user, setUser] = useState<any>(data?.user);
     const router = useRouter()
 
     const singIn = (data: Credentials) => {
         userSingIn(data)
-            .then(res => { router.push('/'), console.log(res) })
-        console.log('se ejhecuta la funcijin')
+            .then(res => { router.push('/')})
+            .catch(err => console.log(err))
     };
 
     const singOut = () => {

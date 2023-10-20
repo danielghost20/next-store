@@ -1,14 +1,19 @@
-import { NextRequest, NextResponse } from "next/server";
+export const config = { matcher: ["/payment/:path*", "/profile/:path*"] }
+import { withAuth } from "next-auth/middleware";
+import {  NextResponse } from "next/server";
 
-export function middleware(request: NextRequest) {
-  const token = request.cookies.get('user_acccess_token')
-    if (!token) {
-      return NextResponse.redirect( new URL('/auth/login', request.url))
-    } else {
-      return NextResponse.next()
+
+export default withAuth(
+    function middleware(request) {
+
+        if(request.nextUrl.pathname.startsWith('/payment', )) {
+            if(request.nextauth.token) {
+                return NextResponse.next()
+            }
+            if(request.nextauth.token == null) {
+                return NextResponse.redirect(new URL('/auth/login', request.url))
+            }
+            
+        }
     }
-}
-
-export const config = {
-  matcher: ["/payment/:path*", "/profile/:path*"]
-}
+)

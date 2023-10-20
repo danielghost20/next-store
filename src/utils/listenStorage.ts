@@ -1,3 +1,0 @@
-const handleStorage = (e: StorageEvent) => {
-    
-}

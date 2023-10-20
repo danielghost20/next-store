@@ -13,7 +13,7 @@ export default async function ProductsPage() {
 
             <main className="flex w-full pt-20">
                 <div className="flex flex-wrap justify-center w-full gap-5 mt-2">
-                    {
+                    {/* {
                         products.map((product) => (
                             <Product
                                 id={product.id}
@@ -26,7 +26,7 @@ export default async function ProductsPage() {
                                 category={product.category.name}
                             />
                         ))
-                    }
+                    } */}
                 </div>
             </main>
         </>

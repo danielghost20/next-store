@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image";
 import {
     Table,
@@ -10,13 +11,13 @@ import {
 } from "@/components/ui/table";
 import { ModeToggle } from "@/components/ui/ModeToggle";
 import Link from "next/link";
-import { auth } from "../firebase";
+import { useSession } from "next-auth/react";
 
-export default async function Profile() {
+export default function Profile() {
 
-    const user = auth.currentUser
+    const {data} = useSession()
 
-    console.log(user?.displayName)
+
     return (
         <>
             <header className="flex items-center justify-end w-full gap-2 border-b-2 h-14">
@@ -34,9 +35,9 @@ export default async function Profile() {
                             alt="wallpeper_image"
                         />
                     </div>
-                    <div className="absolute bg-white rounded-full w-44 h-44 bottom-5 left-10"></div>
+                    <Image width={600} height={600} src={data?.user?.image as string} alt="user_profile" className="absolute object-cover rounded-full w-44 h-44 bottom-5 left-10" />
                     <div className="h-24 ml-64 ">
-                        <h2 className="text-xl font-semibold">{user ? user.displayName : ""}</h2>
+                        <h2 className="text-xl font-semibold">{data?.user?.name}</h2>
                         <span>
                             Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                             Necessitatibus quaerat duc

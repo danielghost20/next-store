@@ -6,13 +6,14 @@ import { LiaShoppingCartSolid } from "react-icons/lia";
 import { ModeToggle } from "./ui/ModeToggle";
 import InputSearch from "./InputSearch";
 import { useCartContext } from "@/context/CartContext";
-import { userSingOut } from "@/services/auth.services";
-
+import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 export default function Navbar({ search }: { search: boolean }) {
 
     const { features: { handleShowCart } } = useCartContext()
-
+    const {data} = useSession()
 
     return (
         <nav className="flex items-center justify-between w-full h-20 px-3 bordder-b-2">
@@ -20,6 +21,15 @@ export default function Navbar({ search }: { search: boolean }) {
                 <Link className="p-2 border-2 rounded-md" href="/">
                     <FiShoppingBag className="text-xl" />
                 </Link>
+                {
+                    data?.user?.image ? 
+                    <Avatar>
+                    <AvatarImage src={data.user.image} alt="@shadcn" />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                    :
+                    null
+                }
             </div>
             {
                 search ?
@@ -36,7 +46,7 @@ export default function Navbar({ search }: { search: boolean }) {
                     <LiaShoppingCartSolid className="text-3xl" />
                 </span>
                 <ModeToggle />
-                <button onClick={userSingOut}>dasd</button>
+                <button onClick={() => signOut()}>dasd</button>
             </div>
         </nav>
     );

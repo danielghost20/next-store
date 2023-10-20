@@ -1,16 +1,20 @@
 import { auth, db } from "@/app/firebase";
 import { Cart } from "@/interfaces/cart.interface";
 import { CreditCard, UserContact } from "@/interfaces/payment.interface";
-import { updateDoc, arrayRemove, arrayUnion, doc } from "firebase/firestore";
+import { updateDoc, arrayUnion, doc } from "firebase/firestore";
 
-export async function postItemCart(cart: Cart[]) {
+export async function postItemCart(cart: Cart[], total: number, email: string) {
   try {
     if (auth.currentUser) {
       const user = auth.currentUser.uid;
       const documentRef = doc(db, "user", user);
-      const response = await updateDoc(documentRef, {
+      
+      const response = await updateDoc(documentRef, 'facture', {
+        totalPrice: total,
         products: cart.map((product) => arrayUnion(product)),
+        email: email
       });
+
       return response;
     }
   } catch (error) {

@@ -45,7 +45,6 @@ export function PaymentProvider({ children }: { children: React.ReactNode }) {
 
     const addUserAddress = (data: UserContact) => {
         setUserAddress(data);
-        console.log(userAddress)
     };
 
     const addUserCard = (data: CreditCard) => {

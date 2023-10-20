@@ -11,6 +11,8 @@ import { useRouter } from "next/navigation";
 import { userSingIn } from "@/services/auth.services";
 import Cookies from "js-cookie";
 import { useState } from "react";
+import { useUserContext } from "@/context/UserContext";
+import {signIn} from 'next-auth/react'
 
 
 export default function LoginPage() {
@@ -24,16 +26,9 @@ export default function LoginPage() {
     const [error, setError] = useState<string>('')
 
     const onSubmit: SubmitHandler<Credentials> = (data: Credentials) => {
-        userSingIn({ email: data.email, password: data.password })
-            .then((user: any) => {
-                console.log(user)
-                if (user.accessToken) {
-                    Cookies.set('user_acccess_token', user.accessToken)
-                } else {
-                    setError('credenciales incorrectas')
-                }
-            })
-            .catch(err => { setError('Credenciales Incorrectas') })
+        if (data) {
+            signIn('credentials', {email: data.email, password: data.password, redirect: true, callbackUrl: '/'})
+        }
     };
 
     return (
@@ -101,6 +96,7 @@ export default function LoginPage() {
                         Iniciar Sesion
                     </button>
                     <button
+                    onClick={() => signIn('google', {redirect: true, callbackUrl: '/'})}
                         className={`${buttonVariants()} w-full flex gap-3 items-center`}
                     >
                         <FcGoogle /> Continuar con Google

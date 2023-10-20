@@ -43,7 +43,6 @@ export default function PaymentCardPage() {
                 expiration_date: inputDate,
                 number_credit_card: inputCardNumber,
             });
-            console.log(' se envio ')
             router.push('/payment/product-details/payment-card/payment-confirm')
         }
     };
