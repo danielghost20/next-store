@@ -1,11 +1,11 @@
 import React from "react";
-import Link from "next/link";
-import { FiShoppingBag, FiGithub } from 'react-icons/fi'
-import { ModeToggle } from "@/components/ui/ModeToggle";
-import PaymentCartList from "@/components/PaymentCartList";
-import RoutesPayment from "@/components/RoutesPayment";
-import TotalCart from "@/components/TotalCart";
-import { PaymentProvider } from "@/context/PaymentContext";
+import Link from "next/link"; // Componente nativo de NextJS
+import { FiShoppingBag, FiGithub } from 'react-icons/fi' // Iconos de la libreria react-icons
+import { ModeToggle } from "@/components/ui/ModeToggle"; // Boton para cambiar el tema de la web
+import PaymentCartList from "@/components/PaymentCartList"; // Componente que renderiza todos lo productos en el carrito
+import RoutesPayment from "@/components/RoutesPayment"; // Componente que muestra en que ruta se encuentra el usuario (direccion, tarjeta, o pagina de confirmacion)
+import TotalCart from "@/components/TotalCart"; // Componente que muestra el total de todo el carrito de compras
+import { PaymentProvider } from "@/context/PaymentContext"; // El provider que contiene la informacion de pago del usuario
 
 
 type ChildrenProps = {

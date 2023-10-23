@@ -70,7 +70,7 @@ export default async function ProductPage({
                                 cardStyles="w-[340px] h-[400px] border-2 p-4  rounded-md"
                                 description={product.description}
                                 id={product.id}
-                                image={product.images[0]}
+                                image={product.images[1]}
                                 price={product.price}
                                 productName={product.title}
                                 key={product.id}

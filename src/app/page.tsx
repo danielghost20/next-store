@@ -1,15 +1,17 @@
-import Product from "@/components/Product";
-import { Products } from "@/interfaces/product.interface";
-import { getProducts } from "@/services/productsHome.services";
-import Image from "next/image";
-import Navbar from "@/components/Navbar";
-import {BiGhost} from 'react-icons/bi'
-import Link from "next/link";
+import Product from "@/components/Product"; // Es un componente reutilizable que se renderiza presentando un producto en especifico
+import { Products } from "@/interfaces/product.interface"; // Es una interfas que tiene todas las propiedades de un producto
+import { getProducts } from "@/services/productsHome.services"; // Obtiene productos de una API
+import Image from "next/image"; // Componente nativo de nextJS para imagenes
+import Navbar from "@/components/Navbar"; // Componente reutilizable, contiene el menu de navegacion y la opcion de usar un input pasandole un valor booleano
+import {BiGhost} from 'react-icons/bi' // Icono de la libreria react-icons
+import Link from "next/link"; // Componente nativo de nextJS para enrutamiento
 
 export default async function Home() {
 
+  /**
+   * @returns {products} retorna una cantidad de productos, (4 en este caso)
+   */
   const products = await getProducts();
-
 
 
   return (

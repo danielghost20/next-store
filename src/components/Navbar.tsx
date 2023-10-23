@@ -10,13 +10,15 @@ import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
+
+
 export default function Navbar({ search }: { search: boolean }) {
 
     const { features: { handleShowCart } } = useCartContext()
     const {data} = useSession()
 
     return (
-        <nav className="flex items-center justify-between w-full h-20 px-3 bordder-b-2">
+        <nav className="flex items-center bg-background justify-between w-full h-20 px-3 bordder-b-2">
             <div className="flex gap-2">
                 <Link className="p-2 border-2 rounded-md" href="/">
                     <FiShoppingBag className="text-xl" />

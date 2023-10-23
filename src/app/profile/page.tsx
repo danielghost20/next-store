@@ -1,5 +1,6 @@
-"use client"
-import Image from "next/image";
+"use client" // La pagina se renderiza del lado del cliente
+
+import Image from "next/image"; // Componente nativo de nextJS
 import {
     Table,
     TableBody,
@@ -8,12 +9,16 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "@/components/ui/table";
-import { ModeToggle } from "@/components/ui/ModeToggle";
-import Link from "next/link";
-import { useSession } from "next-auth/react";
+} from "@/components/ui/table"; // Son componentes de la libreria chadcn, son usados para crear tablas
+import { ModeToggle } from "@/components/ui/ModeToggle"; // Este componente permite cambiar el tema de la web
+import Link from "next/link"; // Componente nativo de nextJS
+import { useSession } from "next-auth/react"; // Hook personalizado de next-auth, trae la sesion del usuario logueado
 
 export default function Profile() {
+
+    /**
+     * @returns {data} retorna la informacion del usuario
+     */
 
     const {data} = useSession()
 

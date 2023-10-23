@@ -1,39 +1,26 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import cookies from "js-cookie";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "@/app/firebase";
-import { userSingIn, userSingOut, userSingUp } from "@/services/auth.services";
-import { Credentials } from "@/interfaces/auth.interface";
-import { userSingUpData } from "@/interfaces/auth.interface";
-import { useRouter } from "next/navigation";
+import { userSignInWithGoogle } from "@/services/auth.services";
 import { useSession } from "next-auth/react";
 
 type UserAuthContextType = {
     user: User | null;
-    features: {
-        singIn: (data: Credentials) => void;
-        singOut: () => void;
-        singUp: (data: UserFormSingUpType) => void;
-    };
+    feature: {
+        signInGoogle: () => Promise<void>
+    }
 };
 
-type UserFormSingUpType = {
-    name: string;
-    last_name: string;
-    phoneNumber: number;
-    email: string;
-    password: string;
-    photoURL: string;
-};
 
 
 const userContext = createContext<UserAuthContextType>({
     user: null,
-    features: {
-        singIn(data) { },
-        singOut() { },
-        singUp(data) { },
-    },
+    feature: {
+        signInGoogle: () => new Promise<void>((resolve, reject) => {
+            // Aquí va tu código
+            resolve();
+        }),
+    }
 });
 
 export const useUserContext = () => {
@@ -43,21 +30,8 @@ export const useUserContext = () => {
 export function UserProvider({ children }: { children: React.ReactNode }) {
     const {data} = useSession()
     const [user, setUser] = useState<any>(data?.user);
-    const router = useRouter()
 
-    const singIn = (data: Credentials) => {
-        userSingIn(data)
-            .then(res => { router.push('/')})
-            .catch(err => console.log(err))
-    };
 
-    const singOut = () => {
-        userSingOut();
-    };
-
-    const singUp = (data: userSingUpData) => {
-        userSingUp(data);
-    };
 
     useEffect(() => {
         const unsudscribre = onAuthStateChanged(auth, (currentUser) => {
@@ -68,7 +42,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
 
     return (
         <userContext.Provider
-            value={{ user, features: { singIn, singOut, singUp } }}
+            value={{ user, feature: {signInGoogle: userSignInWithGoogle}}}
         >
             {children}
         </userContext.Provider>

@@ -1,7 +1,9 @@
 import { Credentials, userSingUpData } from "@/interfaces/auth.interface";
 import {
+  GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
   updateProfile,
 } from "firebase/auth";
@@ -42,7 +44,7 @@ export async function userSingUp(
 }
 
 
-export async function userSingIn({ email, password }: Credentials) {
+export async function userSignIn({ email, password }: Credentials) {
   try {
     const credentials = await signInWithEmailAndPassword(auth, email, password);
     return credentials.user;
@@ -52,10 +54,16 @@ export async function userSingIn({ email, password }: Credentials) {
 }
 
 
+export async function userSignInWithGoogle () {
+  const provider = new GoogleAuthProvider()
+  signInWithPopup(auth, provider)
+
+}
+
+
 export async function userSingOut() {
   try {
     const response = await signOut(auth);
-    Cookies.remove('user_acccess_token')
     return response;
   } catch (error) {
     return error;

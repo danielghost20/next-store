@@ -20,7 +20,7 @@ export default function Product({ cardStyles, image, price, productName, descrip
     return (
         <div className={`${cardStyles} overflow-hidden flex flex-col gap-2 relative`}>
             <div className="relative w-full overflow-hidden h-72">
-                <Image className="object-cover w-full duration-150 h-72 hover:scale-110" src={image} alt={image} width={300} height={400} />
+                <Image className="object-cover w-full h-72" src={image} alt={image} width={300} height={400} />
                 <PriceTag price={price} />
             </div>
             <div className="flex flex-col gap-2 p-2">

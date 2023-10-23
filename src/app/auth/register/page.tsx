@@ -1,12 +1,18 @@
-"use client";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { Input } from "@/components/ui/Input";
-import { buttonVariants } from "@/components/ui/button";
-import Image from "next/image";
-import Link from "next/link";
-import { userSingUp } from "@/services/auth.services";
-import Cookie from "js-cookie";
-import { useRouter } from "next/navigation";
+"use client"; // La pagina se renderiza del lado del cliente
+
+import { useForm, SubmitHandler } from "react-hook-form"; // useForn es un hook que maneja la validacion de formularios, y SubmitHandler es una interfaz para tipar la funcion onSubmit
+import { Input } from "@/components/ui/Input"; // Input es un componente de la libreria chadcn reutilizable
+import { buttonVariants } from "@/components/ui/button"; // Es una funcion de chadcn que retorna estilos personalizados de un botom
+import Image from "next/image"; // Componente nativo de nextJS
+import Link from "next/link"; // Componente nativo de nextJS
+import { userSingUp } from "@/services/auth.services"; // Es una fincion la cual recibe datos del usuario para crear un registro de este mismo
+import { useRouter } from "next/navigation"; // Este hook se puede utilizar para trabajar con url, redireccionamientos etc
+
+
+/**
+ * @type {FormProps} // Es la informacion con el tipo de dato que acepta
+ */
+
 type FormProps = {
     name: string;
     last_name: string;
@@ -16,14 +22,36 @@ type FormProps = {
 };
 
 export default function RegisterPage() {
+
+    /**
+     * @returns {{
+     * register : UseFormRegister<Credentials> 
+     * handleSubmit: UseFormHandleSubmit<Credentials, undefined>,
+     * errors: FieldErrors<Credentials>
+     * }} register: registra todos los datos de los inputs y los guarda para ser usados, handleSubmit: Ejecuta la funcion de enviar formulario validando los datos, errors: Muestra si hay errores como inputs incompletos, etc.
+     * @description Este es un hook de la libreria react-hook-form la cual se usa para validacion de formularios
+     */
+
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm<FormProps>();
+
+    /**
+     * @returns {router} // Con router podemos acceder a diferentes funciones para trabajar con rutas
+     */
+
     const router = useRouter();
 
+    /**
+     * @name onSubmit
+     * @param {FormProps} data // Recibe la data del usuario para crear una cuenta
+     * @description Eta funcion realiza un inicio de sesion, si es exitoso redirige al inicio, de lo contrario retorna el error
+     */
+
     const onSubmit: SubmitHandler<FormProps> = (data: FormProps) => {
+        
         userSingUp(
             {
                 name: data.name,
@@ -34,10 +62,10 @@ export default function RegisterPage() {
                 password: data.password
             }
         ).then((res: any) => {
-            Cookie.set("user_acccess_token", res.accessToken);
             router.push("/");
         });
     };
+    
     return (
         <main className="flex w-full min-h-screen">
             <Image

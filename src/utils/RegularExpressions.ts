@@ -1,3 +1,26 @@
+
+/**
+ * @name handleInputNumberCard
+ * @param {HTMLInputElement} event 
+ * @param {Dispatch<SetStateAction>} setValue
+ * @description Esta funcion retorna un numero con 16 digitos separados por 1 espacio por cada 4 numeros 
+ */
+
+/**
+ * @name handleInputNumberCVV
+ * @param event 
+ * @param setValue
+ * @description Esta funcion retorna un numero con 16 digitos separados por 1 espacio por cada 4 numeros 
+ */
+
+/**
+ * @name handleInputDateCard
+ * @param event 
+ * @param setValue
+ * @description Esta funcion retorna un numero con 16 digitos separados por 1 espacio por cada 4 numeros 
+ */
+
+
 export const handleInputNumberCard = (
   event: React.ChangeEvent<HTMLInputElement>,
   setValue: (formatted: string) => void

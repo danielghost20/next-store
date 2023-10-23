@@ -6,7 +6,7 @@ import {  NextResponse } from "next/server";
 export default withAuth(
     function middleware(request) {
 
-        if(request.nextUrl.pathname.startsWith('/payment', )) {
+        if(request.nextUrl.pathname.startsWith('/payment')) {
             if(request.nextauth.token) {
                 return NextResponse.next()
             }

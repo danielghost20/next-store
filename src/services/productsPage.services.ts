@@ -1,6 +1,40 @@
 import { Products } from "@/interfaces/product.interface";
 import { axiosInstance } from "@/utils/axiosInstance";
 
+
+/**
+ * @name getCategories
+ * @returns {resonse: Promise<string[]>, error: any}
+ * @description Esta funcion retorna un arreglo que contiene las categorias de productos, las retorna en un arreglo el cual se puede usar en diferentes partes 
+ */
+
+/**
+ * @name getProductById
+ * @param {id: number} 
+ * @returns {response: Promise<Products>, error: any}
+ * @description Esta funcion retorna un producto dependiendo dependiendo del id del producto que se le pase por parametro
+ */
+
+/**
+ * @name getProducts
+ * @returns {response: Promise<Proucts[]>, error: any}
+ * @description Esta funcion retorna una promesa con un arreglo de productos, si hay algun problema retorna un error
+ */
+
+/**
+ * @name getSimilarProductsByCategory
+ * @param {category: number}
+ * @returns {response: Promise<Products[]>, error: any} 
+ * @description Esta funcion retorna una promesa con un arreglo de productos, los cuales son similares al producto que el ususario selecciono para ver los detalles
+ */
+
+/**
+ * @name
+ * @returns 
+ * @description
+ */
+
+
 export async function getCategories (): Promise<string[]> {
     try {
         const response = await axiosInstance.get('/products/categories')
