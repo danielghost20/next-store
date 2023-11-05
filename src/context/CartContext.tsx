@@ -40,11 +40,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   ];
 
   const totalProducts = () => {
-    const productsPrice = cartItems.map((item) => item.price);
-    const productsAmount = cartItems.map((item) => item.amount);
-    const cartProductsTotal = productsPrice.reduce((arr, cur) => arr + cur, 0);
-    const cartAmountTotal = productsAmount.reduce((arr, cur) => arr + cur, 0);
-    const total = cartAmountTotal * cartProductsTotal;
+    const total = cartItems.reduce((acc, prod) => {
+      const subTotal = prod.amount * prod.price
+      return acc + subTotal
+    }, 0)
     return Number(total.toFixed(2));
   };
 

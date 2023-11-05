@@ -1,4 +1,23 @@
+"use client"
+
+
+import { getUserPurchases } from "@/services/payment.sevices";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { Purchase } from "@/interfaces/payment.interface";
+
+
 export default function PaymentSuccessPage() {
+
+    const [purchases, setPurchases]   = useState<Purchase[]>()
+
+    const {data: session} = useSession()
+    useEffect(() => {
+        if(session?.user.id) {
+            getUserPurchases(session.user.id)
+            .then((res: Purchase[]) => setPurchases(res))
+        }
+    }, [])
     return (
         <main className="flex items-center justify-center w-full h-screen px-3">
             <div className="max-w-2xl p-2 m-auto border-gray-600 rounded-b-md borser-b-2">
@@ -15,22 +34,20 @@ export default function PaymentSuccessPage() {
                 </div>
                 <h2 className="my-2 text-xl font-semibold">Items</h2>
                 <div className="w-full px-2">
-                    <div className="flex justify-between">
-                        <span>
-                            Producto de nombre
-                        </span>
-                        <span>
-                            $ 124.00
-                        </span>
-                    </div>
-                    <div className="flex justify-between">
-                        <span>
-                            Producto de nombre
-                        </span>
-                        <span>
-                            $ 124.00
-                        </span>
-                    </div>
+                    {/* {
+                        purchases?.purchases.map(item => (
+                            <div className="w-full flex justify-between">
+                                <div className="flex flex-col gap-2 justify-center">
+                                    <span>Nombre</span>
+                                    <span>{item.name}</span>
+                                </div>
+                                <div className="flex flex-col justify-center gap-2">
+                                    <span>Price</span>
+                                    <span>{item.price}</span>
+                                </div>
+                            </div>
+                        ))
+                    } */}
                 </div>
             </div>
         </main>

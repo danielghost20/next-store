@@ -41,7 +41,7 @@ export default function InputSearch() {
                 onChange={handleSearch}
                 type="search"
                 placeholder="Buscar"
-                className="border-none outline-none w-96"
+                className="border-none outline-none bg-transparent w-96"
             />
             <FiSearch className="text-xl" />
             <div

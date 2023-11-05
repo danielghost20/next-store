@@ -1,7 +1,7 @@
 import { auth, db } from "@/app/firebase";
 import { Cart } from "@/interfaces/cart.interface";
-import { CreditCard, UserContact } from "@/interfaces/payment.interface";
-import { doc, setDoc } from "firebase/firestore";
+import { CreditCard, UserContact, Purchase } from "@/interfaces/payment.interface";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 export async function postPurchase(
   cart: Cart[],
@@ -14,6 +14,11 @@ export async function postPurchase(
     if (userId && userId != "") {
       const documentRef = doc(db, "user", userId);
       const date = new Date();
+      const purchasesData =           {
+        date: date,
+        products: cart.map((item) => item),
+        total: total,
+      }
       const data = {
         credit_card: {
           number_credit_card: creditCcard.number_credit_card,
@@ -30,11 +35,7 @@ export async function postPurchase(
           postal_code: address.postal_code,
         },
         purchases: [
-          {
-            date: date,
-            products: [cart.map((item) => item)],
-            total: total,
-          },
+          purchasesData
         ],
       };
       const response = await setDoc(documentRef, data, { merge: true });
@@ -45,5 +46,17 @@ export async function postPurchase(
     }
   } catch (error) {
     return error;
+  }
+}
+
+export async function getUserPurchases (userId: string): Promise<Purchase | any> {
+  try {    
+    if (userId && userId !== '') {
+      const docref = doc(db, 'user', userId)
+      const docSnapShot = await getDoc(docref)
+      return docSnapShot.data()
+    }
+  } catch (error) {
+    console.log(error)
   }
 }

@@ -1,10 +1,9 @@
 import Product from "@/components/Product"; // Es un componente reutilizable que se renderiza presentando un producto en especifico
 import { Products } from "@/interfaces/product.interface"; // Es una interfas que tiene todas las propiedades de un producto
 import { getProducts } from "@/services/productsHome.services"; // Obtiene productos de una API
-import Image from "next/image"; // Componente nativo de nextJS para imagenes
 import Navbar from "@/components/Navbar"; // Componente reutilizable, contiene el menu de navegacion y la opcion de usar un input pasandole un valor booleano
-import {BiGhost} from 'react-icons/bi' // Icono de la libreria react-icons
-import Link from "next/link"; // Componente nativo de nextJS para enrutamiento
+import Image from "next/image";
+
 
 export default async function Home() {
 
@@ -16,24 +15,21 @@ export default async function Home() {
 
   return (
     <>
-      <header>
+      <header className="w-full">
         <Navbar search={true} />
-        <div className="w-full flex flex-col items-center gap-3">
-          <h1 className="flex text-6xl gap-3 my-3 items-center font-extrabold">Ghost <BiGhost/> Shop</h1>
-          <ul className="flex justify-center gap-5 my-3">
-            <li>
-              <Link className="text-xl font-bold" href='/profile'>
-              Perfil
-              </Link>
-            </li>
-            <li>
-              <Link className="text-xl font-bold" href='/products'>
-              Productos
-              </Link>
-            </li>
-          </ul>
+        <div className="w-full px-4">
+        <div className="w-full m-auto gap-4 h-screen grid grid-cols-2 grid-rows-2">
+          <div className="w-full h-full col-start-1 col-end-2 row-start-1 row-end-3 rounded-md border-2 flex justify-center items-center">
+            <Image alt="image_product" width={300} height={300} src='/images/sudadera.webp' className="object-contain w-1/2" />
+          </div>
+          <div className="w-full h-full rounded-md col-start-2 col-end-3 border-2 flex justify-center items-center">
+            <Image alt="image_product" width={300} height={300} src='/images/gorro.webp' className="object-contain w-1/2" />
+          </div>
+          <div className="w-full h-full rounded-md col-start-2 col-end-3 row-start-2 row-end-3 border-2 flex justify-center items-center">
+            <Image alt="image_product" width={300} height={300} src='/images/vaso.webp' className="object-contain w-1/2" />
+          </div>
         </div>
-        <Image className="max-w-screen-2xl w-full object-cover m-auto" src='/images/e-commerce.webp' alt="image_promotion" width={1200} height={900} />
+        </div>
       </header>
 
       <main className="m-auto mb-20 max-w-screen-2xl">
@@ -44,7 +40,7 @@ export default async function Home() {
               id={product.id}
               key={product.id}
               price={product.price}
-              image={product.images[1]}
+              image={product.images[0]}
               cardStyles="w-[340px] h-[400px] border-2  rounded-md"
               productName={product.title}
               description={product.description}

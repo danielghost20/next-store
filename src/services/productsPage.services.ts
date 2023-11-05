@@ -1,4 +1,4 @@
-import { Products } from "@/interfaces/product.interface";
+import { Category, Products } from "@/interfaces/product.interface";
 import { axiosInstance } from "@/utils/axiosInstance";
 
 
@@ -35,9 +35,9 @@ import { axiosInstance } from "@/utils/axiosInstance";
  */
 
 
-export async function getCategories (): Promise<string[]> {
+export async function getCategories (): Promise<Category[]> {
     try {
-        const response = await axiosInstance.get('/products/categories')
+        const response = await axiosInstance.get('/categories')
         return response.data
     } catch (error: any) {
         return error
@@ -62,10 +62,15 @@ export async function getProducts (): Promise<Products[]> {
     }    
 }
 
-export async function getSimilarProductsByCategory(category:number): Promise<Products[]> {
+export async function getSimilarProductsByCategory(category?:number): Promise<Products[]> {
     try {
-        const response = await axiosInstance.get(`/categories/${category}/products?offset=4&limit=4`)
-        return response.data
+        if(category !== 0) {
+            const response = await axiosInstance.get(`/categories/${category}/products?offset=19&limit=10`)
+            return response.data
+        } else {
+            const response = await axiosInstance.get('/products')
+            return response.data
+        }
     } catch (error: any) {
         return error
     }   

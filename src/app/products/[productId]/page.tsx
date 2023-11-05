@@ -9,6 +9,7 @@ import { Products } from "@/interfaces/product.interface";
 import Image from "next/image";
 import ButtonBuy, { ButtonAdd } from "@/components/ButtonClient";
 import Navbar from "@/components/Navbar";
+import {BiGhost} from 'react-icons/bi'
 
 export default async function ProductPage({
     params,
@@ -21,10 +22,11 @@ export default async function ProductPage({
         amount: 1,
         category: product.category.name,
         id: product.id,
-        image: product.images[1],
+        image: product.images[0],
         name: product.title,
         price: product.price,
     };
+
 
     return (
         <>
@@ -32,13 +34,13 @@ export default async function ProductPage({
                 <Navbar search={true} />
             </header>
             <main className="m-auto mt-10 max-w-screen-2xl">
-                <div className="flex justify-center w-full min-h-screen gap-10 px-3">
+                <div className="flex justify-center w-full  gap-10 px-3">
                     <div className="max-w-xl">
                         <Image
-                            src={product.images[1]}
+                            src={product.images[0]}
                             width={500}
                             height={500}
-                            alt={product.images[1]}
+                            alt={product.images[0]}
                         />
                     </div>
                     <div className="flex flex-col max-w-lg gap-5">
@@ -62,20 +64,24 @@ export default async function ProductPage({
                     </div>
                 </div>
                 <h2 className="py-4 text-2xl text-center">Productos similares</h2>
-                <section className="flex flex-wrap justify-between w-full gap-4 px-4">
+                <section className="flex flex-wrap justify-center w-full gap-4 px-4">
                     {
-                        productsByCategory.map((product: Products) => (
+                        productsByCategory.length !== 0 ? productsByCategory.map((product: Products) => (
                             <Product
                                 category={product.category.name}
                                 cardStyles="w-[340px] h-[400px] border-2 p-4  rounded-md"
                                 description={product.description}
                                 id={product.id}
-                                image={product.images[1]}
+                                image={product.images[0]}
                                 price={product.price}
                                 productName={product.title}
                                 key={product.id}
                             />
                         ))
+                        :
+                        <div className="w-full flex justify-center max-w-sm m-auto">
+                            <h2 className="flex items-center gap-2">Parece que no hay productos similares <BiGhost className="text-xl"/></h2>
+                        </div>
                     }
                 </section>
             </main>

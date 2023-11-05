@@ -1,30 +1,35 @@
-
+"use client"
 import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+  } from "@/components/ui/dropdown-menu"
+import { Category } from "@/interfaces/product.interface"
 
-export default function SelectItems() {
+  import Link from "next/link"
+   
+  export default function SelectDemo({categories, setCategory}: {categories: Category[], setCategory: any}) {
+
+    const handleSelectItemId = (id: number) => {
+        console.log(id)
+        setCategory(id)
+    }
+
     return (
-        <Select>
-            <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select a fruit" />
-            </SelectTrigger>
-            <SelectContent>
-                <SelectGroup>
-                    <SelectLabel>Fruits</SelectLabel>
-                    <SelectItem value="apple">Apple</SelectItem>
-                    <SelectItem value="banana">Banana</SelectItem>
-                    <SelectItem value="blueberry">Blueberry</SelectItem>
-                    <SelectItem value="grapes">Grapes</SelectItem>
-                    <SelectItem value="pineapple">Pineapple</SelectItem>
-                </SelectGroup>
-            </SelectContent>
-        </Select>
+        <DropdownMenu>
+        <DropdownMenuTrigger className="p-2 rounded-md border-2 outline-none">Categorias</DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuLabel className="cursor-pointer" onClick={() => handleSelectItemId(0)}>Todas</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          {
+            categories.map(item => (
+                <DropdownMenuItem key={item.id} onClick={() => handleSelectItemId(item.id)}>{item.name}</DropdownMenuItem>
+            ))
+          }
+        </DropdownMenuContent>
+      </DropdownMenu>
     )
-}
+  }

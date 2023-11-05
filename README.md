@@ -1,34 +1,50 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next Store
+![store-image](/public/images/next-store-image.png)
 
-## Getting Started
+next store es una tienda virtual la cual ofrece productos de diferentes tipos, desde tecnología, hasta utilidades para el hogar y el cuidado personal
 
-First, run the development server:
+## Tabla de contenido
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+| Seccion              | Description                                 |
+| -------------------- | ------------------------------------------- |
+| Pagina de inicio | Encuentra diferentes productos   |
+| Pagina de productos         | Filtra los productos por categoria ajustado a tus necesidades   |
+|Informacion de un producto | Obten informacion de un producto en concreto |
+|Carrito de compras | Guarda tus productos en un carrito de compras |
+|Procesos de pago | Compra tus productos y obten un registro de todas tus compras|
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Inicio
+En la pagina principal encontraras 3 productos que saldran proximamente, cuatro productos recomendados asi como un buscador de productos, acceso a tu perfil y acceso al carrito de compras
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+![store-image](/public/images/next-store-image.png)
 
-## Learn More
+## Pagina de productos
+En la pagina de productos encontraras productos de todo tipo, puedes realizar una busqueda por categorias filtrando los productos, tambien puedes buscar un producto en especifico
 
-To learn more about Next.js, take a look at the following resources:
+![](/public/images/next-store-products.png)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Informacion del producto
+En la pagina de unformacion del producto puedes encontrar productos similares al producto seleccionado y informacion de este mismo. (no es necesario haber iniciado sesion para poder agregar productos al carrito)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+![product-info](/public/images/next-store-product-id.png)
 
-## Deploy on Vercel
+## Carrito de compras
+El carrito de compras puede almacenar todos los productos que agregues para obtener un total y detalles como el precio, la cantidad de productos, etc.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+![shop-cart](/public/images/next-store-cart.png)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Proceso de pago
+El proceso de pago cuenta con tres fases:
+ * Registro de direccion
+ * Registro de tarjeta de credito
+ * Confirmacion de compra
+
+Cada una de estas faces permite agregar los datos del usuario o importarlo si ya cuenta con estos mismos
+
+![shop-payment](/public/images/next-store-products.png)
+
+## Despliegue del producto
+Puedes encontrar esta web en:
+ * GitHub (La documentacion de como clonar e instalar el proyecto)
+ * Live (La web en funcion)
