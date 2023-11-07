@@ -44,7 +44,21 @@ Cada una de estas faces permite agregar los datos del usuario o importarlo si ya
 
 ![shop-payment](/public/images/next-store-products.png)
 
+## Herramientas usadas
+![](https://img.shields.io/badge/axios-671ddf?&style=for-the-badge&logo=axios&logoColor=white) 
+![Firebase](https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white)
+![](https://img.shields.io/badge/next%20js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+
+![PNPM](https://img.shields.io/badge/pnpm-%234a4a4a.svg?style=for-the-badge&logo=pnpm&logoColor=f69220)
+![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
+
+## Diagrama de flujo
+
+![](/public/images/next-store-diagram.jpg)
+
 ## Despliegue del producto
 Puedes encontrar esta web en:
- * GitHub (La documentacion de como clonar e instalar el proyecto)
- * Live (La web en funcion)
+ - [GitHub](https://github.com/danielghost20/next-store)
+ - [Despliegue](https://next-store-steel.vercel.app/)
