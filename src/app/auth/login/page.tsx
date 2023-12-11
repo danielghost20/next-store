@@ -12,13 +12,7 @@ import { signIn } from "next-auth/react"; // Es una funcion que maneja el logueo
 
 export default function LoginPage() {
 
-  /**
-   * @returns {{
-   * register : UseFormRegister<Credentials>,
-   * handleSubmit: UseFormHandleSubmit<Credentials, undefined>,
-   * errors: FieldErrors<Credentials>
-   * }}
-   */
+
 
   const {
     register,
@@ -26,11 +20,6 @@ export default function LoginPage() {
     formState: { errors },
   } = useForm<Credentials>();
 
-
-  /**
-   * 
-   * @param data // Recibe las credenciales (enail, password) y automaticamente redirige ala pagina de inicio
-   */
 
   const onSubmit: SubmitHandler<Credentials> = (data: Credentials) => {
     if (data) {

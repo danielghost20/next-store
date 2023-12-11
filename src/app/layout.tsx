@@ -1,10 +1,10 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import ThemeProviderChad from "@/components/ThemeProviderChad";
-import Cart from "@/components/Cart";
+import ThemeProviderChad from "@/components/providers/ThemeProviderChad";
+import Cart from "@/components/cart/Cart";
 import { CartProvider } from "@/context/CartContext";
-import UserSessionProvider from "@/components/UserSessionProvider";
+import UserSessionProvider from "@/components/providers/UserSessionProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 

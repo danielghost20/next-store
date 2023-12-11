@@ -1,5 +1,5 @@
 "use client";
-import { Button, buttonVariants } from "./ui/button";
+import { Button, buttonVariants } from "../../ui/button";
 import {
   useEffect,
   useState

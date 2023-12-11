@@ -5,6 +5,7 @@ import React from "react";
 import PriceTag from "./PriceTag";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
+import { Category } from "@/interfaces/product.interface";
 
 type ProductProps = {
     cardStyles?: string,
@@ -13,7 +14,7 @@ type ProductProps = {
     productName: string,
     description: string,
     id: number,
-    category: string
+    category: Category
 }
 
 export default function Product({ cardStyles, image, price, productName, description, id, category }: ProductProps) {
@@ -25,7 +26,7 @@ export default function Product({ cardStyles, image, price, productName, descrip
             </div>
             <div className="flex flex-col gap-2 p-2">
                 <h2>{productName}</h2>
-                <p>Categoria: {category}</p>
+                <p>Categoria: {category.name}</p>
             </div>
             <Link href={`/products/${id}`} className={`${buttonVariants()} max-w-max m-3`}>
                 Detalles

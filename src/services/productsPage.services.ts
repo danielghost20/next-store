@@ -1,86 +1,64 @@
-import { Category, Products } from "@/interfaces/product.interface";
-import { axiosInstance } from "@/utils/axiosInstance";
+import { Category } from "@/interfaces/product.interface";
+import { db } from "@/app/firebase";
+import {
+  collection,
+  query,
+  getDocs,
+  DocumentData,
+  limit,
+  doc,
+  getDoc,
+  where,
+} from "firebase/firestore";
 
-
-/**
- * @name getCategories
- * @returns {resonse: Promise<string[]>, error: any}
- * @description Esta funcion retorna un arreglo que contiene las categorias de productos, las retorna en un arreglo el cual se puede usar en diferentes partes 
- */
-
-/**
- * @name getProductById
- * @param {id: number} 
- * @returns {response: Promise<Products>, error: any}
- * @description Esta funcion retorna un producto dependiendo dependiendo del id del producto que se le pase por parametro
- */
-
-/**
- * @name getProducts
- * @returns {response: Promise<Proucts[]>, error: any}
- * @description Esta funcion retorna una promesa con un arreglo de productos, si hay algun problema retorna un error
- */
-
-/**
- * @name getSimilarProductsByCategory
- * @param {category: number}
- * @returns {response: Promise<Products[]>, error: any} 
- * @description Esta funcion retorna una promesa con un arreglo de productos, los cuales son similares al producto que el ususario selecciono para ver los detalles
- */
-
-/**
- * @name
- * @returns 
- * @description
- */
-
-
-export async function getCategories (): Promise<Category[]> {
-    try {
-        const response = await axiosInstance.get('/categories')
-        return response.data
-    } catch (error: any) {
-        return error
-    }
+export async function getProducts(): Promise<DocumentData[] | undefined> {
+  try {
+    const products: DocumentData[] = [];
+    const q = query(collection(db, "firebase"), limit(10));
+    const querySnapShots = await getDocs(q);
+    querySnapShots.forEach((doc) => {
+      products.push({
+        ...doc.data(),
+        id: doc.id,
+      });
+    });
+    return products;
+  } catch (error) {
+    throw new Error("error del servidor");
+  }
 }
 
-export async function getProductById (id: number) : Promise<Products> {
-    try {
-        const response = await axiosInstance.get(`/products/${id}`)
-        return response.data
-    } catch (error: any) {
-        return error
-    }
+export async function getProductById(
+  id: string
+): Promise<DocumentData | undefined> {
+  try {
+    const docRef = doc(db, "products", id);
+    const docSnap = await getDoc(docRef);
+    return docSnap.data();
+  } catch (error) {
+    throw new Error("Error del servidor");
+  }
 }
 
-export async function getProducts (): Promise<Products[]> {
-    try {
-        const response = await axiosInstance.get('/products?offset=10&limit=20')
-        return response.data
-    } catch (error: any) {
-        return error
-    }    
-}
-
-export async function getSimilarProductsByCategory(category?:number): Promise<Products[]> {
-    try {
-        if(category !== 0) {
-            const response = await axiosInstance.get(`/categories/${category}/products?offset=19&limit=10`)
-            return response.data
-        } else {
-            const response = await axiosInstance.get('/products')
-            return response.data
-        }
-    } catch (error: any) {
-        return error
-    }   
-}
-
-export async function getProductsBySearch (): Promise<Products[]> {
-    try {
-        const response = await axiosInstance.get('/products?offset=14&limit=14')
-        return response.data
-    } catch (error: any) {
-        return error
-    }
+export async function getSimilarProducts(
+  category: Category
+): Promise<DocumentData | undefined> {
+  try {
+    const products: DocumentData[] = [];
+    const q = query(
+      collection(db, "products"),
+      where("category.name", "==", category.name),
+      limit(4)
+    );
+    const querySnapShots = await getDocs(q);
+    querySnapShots.forEach((doc) => {
+      products.push({
+        ...doc.data(),
+        id: doc.id,
+      });
+    });
+    return products;
+  } catch (error) {
+    throw new Error("Error del servidor");
+  }
 }

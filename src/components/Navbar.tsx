@@ -20,11 +20,11 @@ export default function Navbar({ search }: { search: boolean }) {
           <BiGhost className="text-2xl" />
           <h1 className="text-xl my-3 font-semibold">Shop</h1>
         </Link>
-        {search ? (
+       {/* {search ? (
           <InputSearch />
-        ) : (
-          <h2 className="text-3xl font-semibold">SHOP DANIDV</h2>
-        )}
+      ) : (
+     <h2 className="text-3xl font-semibold">SHOP DANIDV</h2>
+       )}  */}
         <div className="flex gap-2">
           <Dropdown />
           <a className="flex items-center p-2 border-2 rounded-md cursor-pointer">

@@ -1,16 +1,16 @@
-import Product from "@/components/Product"; // Es un componente reutilizable que se renderiza presentando un producto en especifico
-import { Products } from "@/interfaces/product.interface"; // Es una interfas que tiene todas las propiedades de un producto
-import { getProducts } from "@/services/productsHome.services"; // Obtiene productos de una API
-import Navbar from "@/components/Navbar"; // Componente reutilizable, contiene el menu de navegacion y la opcion de usar un input pasandole un valor booleano
+import Product from "@/components/Product"; 
+import { getProducts } from "@/services/productsHome.services";
+import Navbar from "@/components/Navbar";
 import Image from "next/image";
+import { DocumentData } from "firebase/firestore";
 
 
 export default async function Home() {
 
-  /**
-   * @returns {products} retorna una cantidad de productos, (4 en este caso)
-   */
+
   const products = await getProducts();
+
+  if (!products) return <div>CArgando productos...</div>
 
 
   return (
@@ -20,13 +20,13 @@ export default async function Home() {
         <div className="w-full px-4">
         <div className="w-full m-auto gap-4 h-screen grid grid-cols-2 grid-rows-2">
           <div className="w-full h-full col-start-1 col-end-2 row-start-1 row-end-3 rounded-md border-2 flex justify-center items-center">
-            <Image alt="image_product" width={300} height={300} src='/images/sudadera.webp' className="object-contain w-1/2" />
+            <Image alt="image_product" width={300} height={300} src='/images/sudadera.webp' className="object-cover w-1/2" />
           </div>
           <div className="w-full h-full rounded-md col-start-2 col-end-3 border-2 flex justify-center items-center">
             <Image alt="image_product" width={300} height={300} src='/images/gorro.webp' className="object-contain w-1/2" />
           </div>
           <div className="w-full h-full rounded-md col-start-2 col-end-3 row-start-2 row-end-3 border-2 flex justify-center items-center">
-            <Image alt="image_product" width={300} height={300} src='/images/vaso.webp' className="object-contain w-1/2" />
+            <Image alt="image_product" width={300} height={300} src='/images/vaso.webp' className="w-1/3" />
           </div>
         </div>
         </div>
@@ -35,12 +35,12 @@ export default async function Home() {
       <main className="m-auto mb-20 max-w-screen-2xl">
         <h2 className="py-5 text-3xl text-center">Mas Articulos</h2>
         <section className="flex flex-wrap gap-10 p-3 mt-5 justify-evenly">
-          {products.map((product: Products) => (
+          {products.map((product: DocumentData) => (
             <Product
               id={product.id}
               key={product.id}
               price={product.price}
-              image={product.images[0]}
+              image={product.image}
               cardStyles="w-[340px] h-[400px] border-2  rounded-md"
               productName={product.title}
               description={product.description}

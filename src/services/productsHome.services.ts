@@ -1,11 +1,19 @@
-import { Products } from "@/interfaces/product.interface";
-import { axiosInstance } from "@/utils/axiosInstance";
+import { db } from "@/app/firebase";
+import { collection, query, getDocs, DocumentData, limit } from "firebase/firestore";
 
-export async function getProducts (): Promise<Products[]> {
+export async function getProducts () :Promise <DocumentData[] | undefined> {
     try {
-        const response = await axiosInstance.get('products?offset=4&limit=4')
-        return response.data
-    } catch (error: any) {
-        return error
-    }    
+        const products: DocumentData[] = []
+        const q = query(collection(db, 'products'), limit(4))
+        const querySnapShots = await getDocs(q)
+        querySnapShots.forEach((doc) => {
+            products.push({
+                ...doc.data(),
+                id: doc.id
+            })
+        })
+        return products
+    } catch (error) {
+        throw new Error('error del servidor')   
+    }
 }

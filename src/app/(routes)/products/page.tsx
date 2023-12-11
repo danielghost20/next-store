@@ -1,32 +1,23 @@
 "use client"
 
 import Product from "@/components/Product";
-import { getSimilarProductsByCategory } from "@/services/productsPage.services";
 import Navbar from "@/components/Navbar";
-import SelectItems from "@/components/SelectItems";
-import { getCategories } from "@/services/productsPage.services";
 import { useEffect, useState } from "react";
-import { Category, Products } from "@/interfaces/product.interface";
+import { DocumentData } from "firebase/firestore";
+import { getProducts } from "@/services/productsPage.services";
 
 export default function ProductsPage() {
 
-    const [categories, setCategories] = useState<Category[]>([])
-    const [products, setProducts] = useState<Products[]>([])
-    const [category, setCategory] = useState<number>(0)
+    const [products, setProducts] = useState<DocumentData[] | undefined>(undefined)
 
 
     useEffect(() => {
-        getCategories()
-        .then(res => setCategories(res))
-        .catch(err => console.log('ocurrio un error: ', err))
+        getProducts()
+        .then(res => setProducts(res))
+        .catch(err => console.log(err))
     }, [])
 
-    useEffect(() => {
-        getSimilarProductsByCategory(category)
-        .then(res => setProducts(res))
-        .catch(err => console.log('ocurrio un error: ', err))
-    }, [category])
-
+    if (!products) return <div>loading....</div>
 
 
     return (
@@ -36,10 +27,6 @@ export default function ProductsPage() {
             </header>
 
             <main className=" w-full pt-20">
-                <div className="w-full px-5 flex justify-between items-center">
-                    <span>Catalogo de productos</span>
-                    <SelectItems categories={categories} setCategory={setCategory} />
-                </div>
                 <div className="flex flex-wrap justify-center w-full gap-5 mt-2">
                     {
                         products.map((product) => (
@@ -47,7 +34,7 @@ export default function ProductsPage() {
                                 id={product.id}
                                 description={product.description}
                                 cardStyles="w-96 rounded-md border-2 h-96 p-3"
-                                image={product.images[0]}
+                                image={product.image}
                                 price={product.price}
                                 productName={product.title}
                                 key={product.id}

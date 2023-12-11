@@ -2,7 +2,7 @@
 
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import Link from "next/link";
-import { buttonVariants } from "./ui/button";
+import { buttonVariants } from "../ui/button";
 import { Cart } from "@/interfaces/cart.interface";
 import CartProduct from "./CartProduct";
 import { AiOutlineShopping } from "react-icons/ai";

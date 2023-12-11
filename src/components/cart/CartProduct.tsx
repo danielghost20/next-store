@@ -6,7 +6,7 @@ import { useState } from "react"
 import { Cart } from "@/interfaces/cart.interface"
 import { useContext } from "react"
 import CartContext from "@/context/CartContext"
-import Counter from "./Counter"
+import Counter from "../Counter"
 
 export default function CartProduct({ category, image, price, name, id, amount }: Cart) {
 
