@@ -51,12 +51,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setCartItems((prevCartItems) => [...prevCartItems, prod]);
   };
 
-  const removeProduct = (id: number) => {
+  const removeProduct = (id: string) => {
     const newItems = cartItems.filter((item) => item.id !== id);
     setCartItems(newItems);
   };
 
-  const incrementProductAmount = (id: number) => {
+  const incrementProductAmount = (id: string) => {
     const index = cartItems.findIndex((item) => item.id === id);
     if (index >= 0) {
       const newCart = structuredClone(cartItems);
@@ -65,7 +65,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const decrementProductAmount = (id: number) => {
+  const decrementProductAmount = (id: string) => {
     const index = cartItems.findIndex((item) => item.id === id);
     if (index >= 0) {
       const newCart = structuredClone(cartItems);

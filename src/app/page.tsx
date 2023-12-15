@@ -1,5 +1,5 @@
 import Product from "@/components/Product"; 
-import { getProducts } from "@/services/productsHome.services";
+import { getProductsWithLimit } from "@/services/firebase/products.service";
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import { DocumentData } from "firebase/firestore";
@@ -8,9 +8,10 @@ import { DocumentData } from "firebase/firestore";
 export default async function Home() {
 
 
-  const products = await getProducts();
+  const products = await getProductsWithLimit(4);
 
   if (!products) return <div>CArgando productos...</div>
+
 
 
   return (

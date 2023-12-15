@@ -1,5 +1,5 @@
 import { Category, Product as ProductType } from "@/interfaces/product.interface"
-import { getSimilarProducts } from "@/services/productsPage.services"
+import { getSimilarProducts } from "@/services/firebase/products.service"
 import Product from "../Product"
 
 

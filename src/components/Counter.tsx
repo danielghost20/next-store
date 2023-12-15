@@ -2,7 +2,7 @@
 import CartContext from "@/context/CartContext"
 import { useContext } from "react"
 
-export default function Counter({ id, amount }: { id: number, amount: number }) {
+export default function Counter({ id, amount }: { id: string, amount: number }) {
     const { features: { decrementProductAmount, incrementProductAmount } } = useContext(CartContext)
     return (
         <div className="flex items-center justify-between w-20 px-2 py-1 border-2 rounded-md">

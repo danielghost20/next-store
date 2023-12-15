@@ -23,7 +23,7 @@ export default function CartProduct({ category, image, price, name, id, amount }
             />
             <div className="flex flex-col gap-4">
                 <h2>{name}</h2>
-                <span className="text-sm">Categoria: {category}</span>
+                <span className="text-sm">Categoria: {category.name}</span>
                 <span className="flex items-center gap-2 p-1 text-xs border-2 rounded-lg text-foreground max-w-max">
                     <LiaShippingFastSolid className="text-base" /> Envio gratis
                 </span>

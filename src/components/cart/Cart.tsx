@@ -72,7 +72,7 @@ export default function CartProducts() {
                 {
                     items.length > 0 ?
                         <Link
-                            href='/payment/product-details'
+                            href='/payment/checkout'
                             onClick={handleCart}
                             className={`${buttonVariants()} w-full`}
                         >

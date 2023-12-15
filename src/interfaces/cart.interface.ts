@@ -1,8 +1,10 @@
+import { Category } from "./product.interface";
+
 export interface Cart {
-    id: number,
+    id: string,
     image: string,
     name: string,
-    category: string,
+    category: Category,
     price: number,
     amount: number
 }

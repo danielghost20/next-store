@@ -1,21 +1,73 @@
+"use client"
+
+
 import { LiaShoppingCartSolid } from "react-icons/lia";
 import {
     getProductById,
-} from "@/services/productsPage.services";
-import { Product as ProductType } from "@/interfaces/product.interface";
+} from "@/services/firebase/products.service";
+import { Product} from "@/interfaces/product.interface";
 import Image from "next/image";
-import ButtonBuy, { ButtonAdd } from "@/components/ButtonClient";
 import Navbar from "@/components/Navbar";
 import ListSimilarProducts from "@/components/products/LIstSimilarProducts";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { useCartContext } from "@/context/CartContext";
+import { useRouter } from "next/navigation";
+import { buttonVariants } from "@/components/ui/button";
 
-export default async function ProductPage({
+export default  function ProductPage({
     params,
 }: {
     params: { productId: string };
 }) {
-    const product = await getProductById(params.productId) as ProductType;
+
+    const [product, setProduct] = useState<Product>()
+    const [isProductInCart, setIsproductInCart] = useState<boolean>(false)
+
+    const router = useRouter()
+
+    const {features: {addProductToCart, removeProduct}, items} = useCartContext()
     
+    const handleAddProduct = () => {
+        if(product) {
+            addProductToCart({
+                amount: 1,
+                category: product.category,
+                id: product.id,
+                image: product.image,
+                name: product.title,
+                price: product.price
+            })
+        }
+    }
+
+    const handleBuyProduct = () => {
+        if (product) {
+            addProductToCart({
+                amount: 1,
+                category: product.category,
+                id: product.id,
+                image: product.image,
+                name: product.title,
+                price: product.price
+            })
+            router.push('/payment/checkout')
+        }
+    } 
+
+    useEffect(() => {
+        getProductById(params.productId)
+        .then(res => setProduct(res))
+        .catch(err => console.log(err))
+    }, [])
+
+    useEffect(() => {
+        if (product) {
+           const value: boolean =  items.some(item => item.id === product.id)
+           setIsproductInCart(value)
+        }
+    }, [addProductToCart, removeProduct])
+
+    if(!product) return <div>Cargando...</div>
 
     return (
         <>
@@ -38,24 +90,8 @@ export default async function ProductPage({
                         <p className="text-lg">Price: ${product.price} MNX</p>
                         <p className="text-lg">Categoria: {product.category.name}</p>
                         <div className="flex gap-5">
-                            <ButtonAdd item={{
-                                amount: 1,
-                                category: product.category.name,
-                                id: product.id,
-                                image: product.image,
-                                name: product.title,
-                                price: product.price
-                            }}>
-                                Agregar al <LiaShoppingCartSolid className="text-lg" />
-                            </ButtonAdd>
-                            <ButtonBuy
-                                amount={1}
-                                category={product.category.name}
-                                id={product.id}
-                                image={product.image}
-                                price={product.price}
-                                name={product.title}
-                            />
+                            <button disabled={isProductInCart} onClick={handleAddProduct} className={`${buttonVariants()} flex max-w-max gap-2 items-center `}>Agregar al carrito< LiaShoppingCartSolid className="text-xl"/></button>
+                            <button disabled={isProductInCart} onClick={handleBuyProduct} className={`${buttonVariants()}`}>Comprar</button>
                         </div>
                     </div>
                 </div>

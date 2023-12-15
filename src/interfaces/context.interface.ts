@@ -10,9 +10,9 @@ export interface CartContextType  {
       addProductToCart: (prod: Cart) => void;
       handleShowCart: () => void;
       totalProducts: () => number;
-      removeProduct: (id: number) => void;
-      incrementProductAmount: (id: number) => void;
-      decrementProductAmount: (id: number) => void;
+      removeProduct: (id: string) => void;
+      incrementProductAmount: (id: string) => void;
+      decrementProductAmount: (id: string) => void;
     };
   };
 

@@ -13,7 +13,7 @@ type ProductProps = {
     price: number,
     productName: string,
     description: string,
-    id: number,
+    id: string,
     category: Category
 }
 

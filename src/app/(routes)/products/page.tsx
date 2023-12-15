@@ -4,7 +4,7 @@ import Product from "@/components/Product";
 import Navbar from "@/components/Navbar";
 import { useEffect, useState } from "react";
 import { DocumentData } from "firebase/firestore";
-import { getProducts } from "@/services/productsPage.services";
+import { getProducts } from "@/services/firebase/products.service";
 
 export default function ProductsPage() {
 
